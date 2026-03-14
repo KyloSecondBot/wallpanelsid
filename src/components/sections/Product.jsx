@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.jsx';
 
@@ -156,9 +156,7 @@ export default function Product() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [showHint, setShowHint] = useState(true);
-  const dragX = useMotionValue(0);
-  const dragRef = useRef(null);
-  const isDragging = useRef(false);
+  const touchRef = useRef({ startX: 0, startY: 0, swiped: false });
 
   const next = useCallback(() => setActive((p) => (p + 1) % COUNT), []);
   const prev = useCallback(() => setActive((p) => (p - 1 + COUNT) % COUNT), []);
@@ -192,19 +190,46 @@ export default function Product() {
     handleInteraction();
   };
 
-  /* Drag/swipe handlers */
-  const handleDragStart = () => {
-    isDragging.current = true;
+  /* Touch swipe handlers */
+  const onTouchStart = (e) => {
+    touchRef.current = {
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      swiped: false,
+    };
   };
 
-  const handleDragEnd = () => {
-    const x = dragX.get();
-    if (Math.abs(x) > 40) {
-      if (x < 0) next(); else prev();
+  const onTouchMove = (e) => {
+    if (touchRef.current.swiped) return;
+    const dx = e.touches[0].clientX - touchRef.current.startX;
+    const dy = e.touches[0].clientY - touchRef.current.startY;
+    /* Only trigger if horizontal movement is dominant */
+    if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+      touchRef.current.swiped = true;
+      if (dx < 0) next(); else prev();
       handleInteraction();
     }
-    dragX.set(0);
-    isDragging.current = false;
+  };
+
+  /* Mouse drag for desktop */
+  const mouseRef = useRef({ startX: 0, dragging: false });
+
+  const onMouseDown = (e) => {
+    mouseRef.current = { startX: e.clientX, dragging: true };
+  };
+
+  const onMouseMove = (e) => {
+    if (!mouseRef.current.dragging) return;
+    const dx = e.clientX - mouseRef.current.startX;
+    if (Math.abs(dx) > 50) {
+      mouseRef.current.dragging = false;
+      if (dx < 0) next(); else prev();
+      handleInteraction();
+    }
+  };
+
+  const onMouseUp = () => {
+    mouseRef.current.dragging = false;
   };
 
   return (
@@ -230,18 +255,16 @@ export default function Product() {
         </motion.div>
 
         {/* Coverflow carousel */}
-        <motion.div
-          ref={dragRef}
-          className="relative mx-auto overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
-          style={{ x: dragX, height: '480px' }}
+        <div
+          className="relative mx-auto overflow-hidden cursor-grab active:cursor-grabbing select-none"
+          style={{ height: '480px' }}
           onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.15}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          dragSnapToOrigin
+          onMouseLeave={() => { setPaused(false); onMouseUp(); }}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
         >
           {/* Side fade masks */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-20 bg-gradient-to-r from-black to-transparent sm:w-32" />
@@ -263,7 +286,7 @@ export default function Product() {
             ))}
           </div>
 
-        </motion.div>
+        </div>
 
         {/* Dots + swipe hint — tight to carousel */}
         <div className="mt-2 flex flex-col items-center gap-2">
