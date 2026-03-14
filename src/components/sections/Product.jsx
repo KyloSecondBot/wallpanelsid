@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.jsx';
 
 const SERIES = [
@@ -62,10 +62,31 @@ function getOffset(i, active) {
 /* Position + style each card based on offset from center */
 function getCardStyle(offset) {
   const abs = Math.abs(offset);
-  if (abs === 0) return { x: 0, rotateY: 0, scale: 1, z: 10, opacity: 1, blur: 0 };
-  if (abs === 1) return { x: offset * 290, rotateY: offset * -32, scale: 0.82, z: 0, opacity: 0.6, blur: 0 };
-  if (abs === 2) return { x: offset * 420, rotateY: offset * -45, scale: 0.66, z: -60, opacity: 0.3, blur: 2 };
-  return { x: 0, rotateY: 0, scale: 0.5, z: -100, opacity: 0, blur: 4 };
+  if (abs === 0) return { x: 0, rotateY: 0, scale: 1, z: 10, opacity: 1 };
+  if (abs === 1) return { x: offset * 290, rotateY: offset * -32, scale: 0.82, z: 0, opacity: 0.55 };
+  if (abs === 2) return { x: offset * 420, rotateY: offset * -45, scale: 0.66, z: -60, opacity: 0.25 };
+  return { x: 0, rotateY: 0, scale: 0.5, z: -100, opacity: 0 };
+}
+
+/* Blinking swipe hint */
+function SwipeHint({ visible }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.7, 0, 0.7, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="pointer-events-none"
+        >
+          <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
+            Geser untuk jelajahi
+          </span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 /* ── Single coverflow card ── */
@@ -84,7 +105,6 @@ function CoverCard({ item, index, active, onClick }) {
         scale: style.scale,
         opacity: style.opacity,
         zIndex: 10 - Math.abs(offset),
-        filter: style.blur ? `blur(${style.blur}px)` : 'blur(0px)',
       }}
       transition={{ type: 'spring', stiffness: 200, damping: 26, mass: 0.9 }}
       onClick={() => onClick(index)}
@@ -135,6 +155,10 @@ function CoverCard({ item, index, active, onClick }) {
 export default function Product() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [showHint, setShowHint] = useState(true);
+  const dragX = useMotionValue(0);
+  const dragRef = useRef(null);
+  const isDragging = useRef(false);
 
   const next = useCallback(() => setActive((p) => (p + 1) % COUNT), []);
   const prev = useCallback(() => setActive((p) => (p - 1 + COUNT) % COUNT), []);
@@ -146,22 +170,46 @@ export default function Product() {
     return () => clearInterval(timer);
   }, [paused, next]);
 
+  /* Hide swipe hint after 6 seconds or on first interaction */
+  useEffect(() => {
+    const timer = setTimeout(() => setShowHint(false), 6000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const pauseAutoplay = useCallback(() => {
+    setPaused(true);
+    setTimeout(() => setPaused(false), 8000);
+  }, []);
+
+  const handleInteraction = useCallback(() => {
+    setShowHint(false);
+    pauseAutoplay();
+  }, [pauseAutoplay]);
+
   const handleClick = (i) => {
     if (i === active) return;
     setActive(i);
-    setPaused(true);
-    setTimeout(() => setPaused(false), 8000);
+    handleInteraction();
   };
 
-  const handleNav = (fn) => {
-    fn();
-    setPaused(true);
-    setTimeout(() => setPaused(false), 8000);
+  /* Drag/swipe handlers */
+  const handleDragStart = () => {
+    isDragging.current = true;
+  };
+
+  const handleDragEnd = () => {
+    const x = dragX.get();
+    if (Math.abs(x) > 40) {
+      if (x < 0) next(); else prev();
+      handleInteraction();
+    }
+    dragX.set(0);
+    isDragging.current = false;
   };
 
   return (
     <section id="portfolio-product" className="px-6">
-      <div className="mx-auto max-w-6xl space-y-6">
+      <div className="mx-auto max-w-6xl">
 
         {/* Header */}
         <motion.div
@@ -169,6 +217,7 @@ export default function Product() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.55 }}
+          className="mb-6"
         >
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Koleksi Kami</p>
           <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -181,11 +230,18 @@ export default function Product() {
         </motion.div>
 
         {/* Coverflow carousel */}
-        <div
-          className="relative mx-auto overflow-hidden"
-          style={{ height: '480px' }}
+        <motion.div
+          ref={dragRef}
+          className="relative mx-auto overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+          style={{ x: dragX, height: '480px' }}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          dragSnapToOrigin
         >
           {/* Side fade masks */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-20 bg-gradient-to-r from-black to-transparent sm:w-32" />
@@ -206,35 +262,11 @@ export default function Product() {
               />
             ))}
           </div>
-        </div>
 
-        {/* Description panel */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={SERIES[active].id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto max-w-lg text-center"
-          >
-            <p className="text-base leading-relaxed text-white/55">{SERIES[active].description}</p>
-          </motion.div>
-        </AnimatePresence>
+        </motion.div>
 
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-5">
-          <button
-            onClick={() => handleNav(prev)}
-            aria-label="Previous series"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/50 transition hover:border-amber-400/30 hover:bg-white/10 hover:text-white"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          {/* Dots */}
+        {/* Dots + swipe hint — tight to carousel */}
+        <div className="mt-2 flex flex-col items-center gap-2">
           <div className="flex items-center gap-2">
             {SERIES.map((item, i) => (
               <button
@@ -249,17 +281,22 @@ export default function Product() {
               />
             ))}
           </div>
-
-          <button
-            onClick={() => handleNav(next)}
-            aria-label="Next series"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/50 transition hover:border-amber-400/30 hover:bg-white/10 hover:text-white"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          <SwipeHint visible={showHint} />
         </div>
+
+        {/* Description panel */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={SERIES[active].id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-5 max-w-lg text-center"
+          >
+            <p className="text-base leading-relaxed text-white/55">{SERIES[active].description}</p>
+          </motion.div>
+        </AnimatePresence>
 
       </div>
     </section>
