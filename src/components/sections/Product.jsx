@@ -94,49 +94,49 @@ function CoverCard({ item, index, active, onClick }) {
   const offset = getOffset(index, active);
   const style = getCardStyle(offset);
   const isFront = offset === 0;
+  const abs = Math.abs(offset);
 
   return (
     <motion.div
-      className="absolute left-1/2 top-0 w-[280px] h-[400px] sm:w-[320px] sm:h-[440px] origin-center"
-      style={{ perspective: 1200 }}
+      className="absolute left-1/2 top-0 w-[280px] h-[400px] sm:w-[320px] sm:h-[440px] origin-center will-change-transform"
+      style={{ perspective: 1200, backfaceVisibility: 'hidden' }}
       animate={{
         x: `calc(-50% + ${style.x}px)`,
         rotateY: style.rotateY,
         scale: style.scale,
         opacity: style.opacity,
-        zIndex: 10 - Math.abs(offset),
+        zIndex: 10 - abs,
       }}
-      transition={{ type: 'spring', stiffness: 200, damping: 26, mass: 0.9 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 30 }}
       onClick={() => onClick(index)}
       role="button"
       tabIndex={0}
       aria-label={`View ${item.title}`}
     >
       <div
-        className={`relative h-full w-full overflow-hidden rounded-3xl border shadow-[0_25px_80px_rgba(0,0,0,0.6)] transition-colors duration-500 ${
+        className={`relative h-full w-full overflow-hidden rounded-3xl border shadow-lg shadow-black/40 transition-colors duration-300 ${
           isFront ? 'border-amber-400/30 cursor-default' : 'border-white/10 cursor-pointer'
         }`}
       >
-        {/* Image */}
-        <motion.img
+        {/* Image — plain img, no animation */}
+        <img
           src={item.image}
           alt={item.title}
           className="absolute inset-0 h-full w-full object-cover"
           loading={index < 3 ? 'eager' : 'lazy'}
-          animate={{ scale: isFront ? 1.05 : 1 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          decoding="async"
         />
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" />
 
-        {/* Active glow edge */}
-        <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent transition-opacity duration-500 ${isFront ? 'opacity-100' : 'opacity-0'}`} />
-        <div className={`absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-amber-400/20 to-transparent transition-opacity duration-500 ${isFront ? 'opacity-100' : 'opacity-0'}`} />
-        <div className={`absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-amber-400/20 to-transparent transition-opacity duration-500 ${isFront ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Active glow edge — only render on front card */}
+        {isFront && (
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+        )}
 
-        {/* Badge */}
-        <div className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 backdrop-blur-md">
+        {/* Badge — no backdrop-blur */}
+        <div className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
           {String(index + 1).padStart(2, '0')}
         </div>
 
@@ -270,8 +270,8 @@ export default function Product() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-20 bg-gradient-to-r from-black to-transparent sm:w-32" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-20 bg-gradient-to-l from-black to-transparent sm:w-32" />
 
-          {/* Ambient glow */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-amber-400/5 blur-[80px]" />
+          {/* Ambient glow — subtle, no blur */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-amber-400/4 blur-3xl" />
 
           {/* Cards */}
           <div className="relative h-full w-full" style={{ perspective: '1200px' }}>
