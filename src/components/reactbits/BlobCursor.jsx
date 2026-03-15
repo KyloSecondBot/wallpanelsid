@@ -5,12 +5,18 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function BlobCursor() {
   const [isActive, setIsActive] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const mouseX = useMotionValue(-200);
   const mouseY = useMotionValue(-200);
   const springX = useSpring(mouseX, { stiffness: 120, damping: 15, mass: 0.4 });
   const springY = useSpring(mouseY, { stiffness: 120, damping: 15, mass: 0.4 });
 
   useEffect(() => {
+    /* Skip on touch/mobile devices — saves battery + prevents jank */
+    if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
+      setIsTouchDevice(true);
+      return;
+    }
     const move = (event) => {
       mouseX.set(event.clientX - 80);
       mouseY.set(event.clientY - 80);
@@ -26,6 +32,8 @@ export default function BlobCursor() {
       window.removeEventListener('pointerup', up);
     };
   }, [mouseX, mouseY]);
+
+  if (isTouchDevice) return null;
 
   return (
     <motion.div

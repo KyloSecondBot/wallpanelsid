@@ -39,10 +39,10 @@ export default function NavBar() {
       >
         {/* Main pill */}
         <div
-          className={`mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-full border border-white/10 px-4 py-3 backdrop-blur-xl transition-all sm:px-6 ${
+          className={`mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-full border border-white/10 px-4 py-3 transition-all sm:px-6 sm:backdrop-blur-xl ${
             scrolled || menuOpen
-              ? 'bg-black/92 shadow-[0_10px_40px_rgba(0,0,0,0.6)]'
-              : 'bg-black/30'
+              ? 'bg-black/95 shadow-lg shadow-black/40 sm:bg-black/92'
+              : 'bg-black/60 sm:bg-black/30'
           }`}
         >
           {/* Logo */}

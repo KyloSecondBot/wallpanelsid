@@ -197,7 +197,7 @@ export default function Hero() {
               animate={reduce ? {} : { y: [0, -4, 0] }}
               transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <div className="rounded-2xl border border-white/15 bg-black/65 px-3.5 py-2.5 backdrop-blur-md">
+              <div className="rounded-2xl border border-white/15 bg-black/80 px-3.5 py-2.5 sm:bg-black/65 sm:backdrop-blur-md">
                 <p className="text-xs font-semibold text-amber-300/80">Luxury Residence</p>
                 <p className="mt-0.5 text-[11px] text-white/55">Jakarta · Completed 2025</p>
               </div>
@@ -250,7 +250,7 @@ export default function Hero() {
             <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
             {/* Floating project count badge */}
             <motion.div
-              className="absolute right-3 top-3 z-20 rounded-2xl border border-white/15 bg-black/70 px-3 py-2 text-center backdrop-blur-md"
+              className="absolute right-3 top-3 z-20 rounded-2xl border border-white/15 bg-black/85 px-3 py-2 text-center sm:bg-black/70 sm:backdrop-blur-md"
               animate={reduce ? {} : { y: [0, -5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
             >
@@ -281,6 +281,7 @@ export default function Hero() {
                 aria-hidden="true"
                 className="h-full w-full object-cover opacity-55 transition-opacity duration-300 hover:opacity-85"
                 loading="lazy"
+                decoding="async"
               />
             </div>
           ))}
