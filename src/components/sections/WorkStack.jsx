@@ -7,7 +7,7 @@ import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.js
 const STRENGTHS = [
   {
     id: 's1',
-    index: '01',
+    icon: '/images/strength-eco.webp',
     title: 'Environmental Protection',
     subtitle: 'Ramah Lingkungan',
     description: 'Material bebas formaldehida dan dapat didaur ulang. Diproduksi dengan proses ramah lingkungan untuk masa depan yang lebih hijau.',
@@ -17,7 +17,7 @@ const STRENGTHS = [
   },
   {
     id: 's2',
-    index: '02',
+    icon: '/images/strength-flame.webp',
     title: 'Flame-retardant',
     subtitle: 'Tahan Api',
     description: 'Memenuhi standar ketahanan api kelas B1. Memberikan perlindungan ekstra dan keamanan maksimal untuk hunian maupun ruang komersial.',
@@ -27,7 +27,7 @@ const STRENGTHS = [
   },
   {
     id: 's3',
-    index: '03',
+    icon: '/images/strength-water.webp',
     title: 'Waterproof',
     subtitle: 'Tahan Air',
     description: 'Panel tahan air yang cocok untuk area lembap seperti kamar mandi dan dapur. Tidak mengembang, tidak berjamur.',
@@ -37,7 +37,7 @@ const STRENGTHS = [
   },
   {
     id: 's4',
-    index: '04',
+    icon: '/images/strength-flex.webp',
     title: 'Bendable / Flexible',
     subtitle: 'Fleksibel',
     description: 'Dapat dilengkungkan untuk mengikuti kontur dinding melengkung. Fleksibilitas tinggi tanpa mengorbankan kekuatan dan estetika.',
@@ -47,7 +47,7 @@ const STRENGTHS = [
   },
   {
     id: 's5',
-    index: '05',
+    icon: '/images/strength-insect.webp',
     title: 'Insect Prevention',
     subtitle: 'Anti Serangga',
     description: 'Formulasi material yang tahan terhadap rayap dan serangga perusak. Dinding Anda tetap utuh dan bersih dalam jangka panjang.',
@@ -104,14 +104,15 @@ export default function WorkStack() {
 
               {/* Card content */}
               <div className="relative flex flex-col gap-5 p-8 sm:p-10 md:p-12">
-                {/* Top row: logo placeholder + index badge */}
+                {/* Top row: icon + subtitle badge */}
                 <div className="flex items-start justify-between gap-4">
-                  {/* Logo placeholder — will be replaced with actual icon */}
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-                    <span className="font-display text-3xl font-semibold text-amber-300/40">
-                      {s.index}
-                    </span>
-                  </div>
+                  <img
+                    src={s.icon}
+                    alt={s.title}
+                    className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-medium tracking-wide text-amber-300">
                     {s.subtitle}
                   </span>
