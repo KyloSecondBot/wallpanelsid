@@ -5,15 +5,15 @@ import GlareHover from '@/components/reactbits/GlareHover.jsx';
 const QUOTES = [
   {
     id: 'fallback-1',
-    name: 'Ibu Ratna Dewi',
+    name: 'Ibu Ratna',
     title: 'Pemilik Rumah, Jakarta Selatan',
-    quote: 'Hasilnya luar biasa — setiap detail diperhatikan dengan teliti. Rumah kami terasa seperti hotel bintang lima sekarang. Tim Wallpanels.id sangat profesional dan responsif.',
+    quote: 'Ya ampun, hasilnya bagus banget - tiap detail bener-bener diperhatiin. Rumah rasanya kayak hotel bintang lima sekarang deh. Tim wallpanels.id juga ramah dan responsif banget!',
   },
   {
     id: 'fallback-2',
-    name: 'Bapak Andi Kurniawan',
-    title: 'Direktur, PT Karya Mandiri',
-    quote: 'Wallpanels.id membuat kantor kami terasa hidup. Material, tekstur, dan finishing — semuanya dikerjakan tepat waktu dan sesuai ekspektasi.',
+    name: 'Bapak Kurniawan',
+    title: 'Pemilik Gedung Kantor, Jakarta Barat',
+    quote: 'wallpanels.id bikin kantor kami jadi lebih hidup. Material, tekstur, sama finishing-nya oke semua - selesai tepat waktu dan hasilnya sesuai ekspektasi.',
   },
 ];
 

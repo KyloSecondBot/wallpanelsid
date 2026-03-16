@@ -46,10 +46,10 @@ export default function NavBar() {
           }`}
         >
           {/* Logo */}
-          <a href="#" aria-label="Wallpanels.id home" className="shrink-0" onClick={closeMenu}>
+          <a href="#" aria-label="wallpanels.id home" className="shrink-0" onClick={closeMenu}>
             <img
               src="/images/wallpanels-logo.webp"
-              alt="Wallpanels.id"
+              alt="wallpanels.id"
               className="h-11 w-11 rounded-xl object-cover shadow-[0_2px_12px_rgba(0,0,0,0.4)] transition hover:scale-105 sm:h-12 sm:w-12"
             />
           </a>

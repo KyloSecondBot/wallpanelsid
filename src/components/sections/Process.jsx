@@ -30,14 +30,20 @@ const ICONS = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
     </svg>
   ),
+  factory: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h6v7.5H4.5V3Zm0 7.5v10.5m6-10.5 4.5 3.75V21m0-10.5 4.5 3.75V21M10.5 3v7.5m4.5 0V3h4.5v7.5" />
+    </svg>
+  ),
 };
 
 const STEPS = [
-  { id: 'f1', num: '01', title_en: 'Estimasi Harga',  title_id: 'Price Estimation',  description: 'Kami menilai ruang, kebutuhan, dan visi Anda untuk memberikan estimasi biaya yang detail dan transparan — tanpa biaya tersembunyi.',  icon_name: 'money' },
-  { id: 'f2', num: '02', title_en: 'Survey Lokasi',   title_id: 'Site Survey',      description: 'Tim kami mengunjungi lokasi Anda untuk mengukur, mendokumentasikan, dan memahami ruang secara menyeluruh sebelum proses desain dimulai.',   icon_name: 'location' },
-  { id: 'f3', num: '03', title_en: 'Desain',          title_id: 'Design',           description: 'Kami merancang denah interior detail, visualisasi 3D, dan pemilihan material yang dikurasi — disempurnakan hingga Anda puas.',               icon_name: 'design' },
-  { id: 'f4', num: '04', title_en: 'Proses Produksi', title_id: 'Production',       description: 'Furnitur dan fitting custom diproduksi sesuai spesifikasi di fasilitas kami dengan kontrol kualitas ketat di setiap tahap.',                icon_name: 'wrench' },
-  { id: 'f5', num: '05', title_en: 'Instalasi',       title_id: 'Installation',     description: 'Pemasangan di lokasi dengan layanan premium, styling akhir, dan serah terima. Kami baru selesai saat setiap detail sudah sempurna.',        icon_name: 'home' },
+  { id: 'f1', num: '01', title_en: 'Survey Lokasi',          title_id: 'Site Survey',       description: 'Tim kami datang ke lokasi Bapak/Ibu buat ukur ruangan dan diskusi langsung, biar kami paham keseluruhan konsep yang diinginkan.',           icon_name: 'location' },
+  { id: 'f2', num: '02', title_en: 'Penawaran Harga',        title_id: 'Price Quotation',   description: 'Kami buatkan rincian harga berdasarkan hasil survey. Bapak/Ibu bisa sesuaikan dengan budget dan kebutuhan.',                    icon_name: 'money' },
+  { id: 'f3', num: '03', title_en: 'Desain',                 title_id: 'Design',            description: 'Proses desain langsung jalan, koordinasi lewat grup WhatsApp. Ada batasan revisi supaya prosesnya tetap efisien.',                          icon_name: 'design' },
+  { id: 'f4', num: '04', title_en: 'Kunjungan Pabrik',       title_id: 'Factory Visit',     description: 'Tahap ini opsional. Bapak/Ibu boleh mampir ke pabrik atau proyek yang lagi jalan buat lihat langsung kualitas kerja kami.',                 icon_name: 'factory' },
+  { id: 'f5', num: '05', title_en: 'Proses Produksi',        title_id: 'Production',        description: 'Semua item kami produksi sesuai penawaran harga yang sudah disetujui. Kualitas tetap jadi prioritas utama.',                                icon_name: 'wrench' },
+  { id: 'f6', num: '06', title_en: 'Instalasi',              title_id: 'Installation',      description: 'Barang dikirim dan instalasi dimulai di lokasi Bapak/Ibu. Setelah selesai, kami kasih warranty 12 bulan untuk semua pekerjaan.',            icon_name: 'home' },
 ];
 
 export default function Process() {
@@ -57,16 +63,16 @@ export default function Process() {
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Proses Kerja</p>
           <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Cara kami mewujudkan ruang impian Anda.
+              Cara kami mewujudkan interior impian kamu.
             </h2>
-            <p className="text-sm text-white/30">Lima langkah jelas. Tanpa kejutan.</p>
+            <p className="text-sm text-white/30">Enam langkah, cepat beres !</p>
           </div>
         </motion.div>
 
         {/* Step grid */}
-        <div className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
-          {/* Connector line — desktop only */}
+          {/* Connector line - desktop only */}
           <div className="pointer-events-none absolute left-0 right-0 top-[44px] hidden h-px lg:block overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"

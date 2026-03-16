@@ -122,10 +122,10 @@ const CardNav = ({ logo, logoAlt = 'Logo', items = [], ease = 'power3.out' }) =>
             />
           </button>
 
-          {/* Logo — centered on desktop */}
+          {/* Logo - centered on desktop */}
           <a
             href="#"
-            aria-label="Wallpanels.id home"
+            aria-label="wallpanels.id home"
             className="order-1 md:order-none md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
             onClick={() => { if (isExpanded) toggleMenu(); }}
           >
@@ -136,7 +136,7 @@ const CardNav = ({ logo, logoAlt = 'Logo', items = [], ease = 'power3.out' }) =>
             />
           </a>
 
-          {/* CTA — desktop only */}
+          {/* CTA - desktop only */}
           <a
             href="#contact"
             className="hidden md:inline-flex items-center rounded-full bg-gradient-to-r from-amber-300 to-amber-400 px-4 py-2 text-slate-950 text-sm font-semibold shadow-[0_6px_24px_rgba(173,158,143,0.25)] transition hover:-translate-y-[1px]"

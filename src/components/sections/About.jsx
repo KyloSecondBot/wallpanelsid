@@ -25,17 +25,25 @@ const PILLARS = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
       </svg>
     ),
-    label: '200+',
+    label: 'JHI Group',
+    desc: 'Sejak 2018',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+      </svg>
+    ),
+    label: '100+',
     desc: 'Tenaga profesional',
   },
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.25 2.25 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m-5.522-12.1-.003-.108c0-.794.645-1.44 1.44-1.44h.004c.776 0 1.404.628 1.404 1.404 0 .396-.162.776-.45 1.05l-.19.19M3.887 15.903 12 21.75l7.94-5.814" />
       </svg>
     ),
     label: 'Nasional',
@@ -44,20 +52,11 @@ const PILLARS = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-      </svg>
-    ),
-    label: '#1',
-    desc: 'Desain & bangun interior',
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
       </svg>
     ),
     label: 'End-to-end',
-    desc: 'Dari konsep sampai serah terima',
+    desc: 'Menjual produk satuan sampai jasa design dan build',
   },
 ];
 
@@ -76,9 +75,8 @@ export default function About() {
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Tentang Kami</p>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="max-w-xl text-3xl font-semibold text-white sm:text-4xl">
-              Perusahaan desain &amp; bangun interior terdepan di Indonesia.
+              JHI Group - wallpanels.id
             </h2>
-            <p className="text-sm text-white/35 sm:text-right sm:max-w-xs">Sejak 2018 · Jakarta, Indonesia</p>
           </div>
         </motion.div>
 
@@ -103,17 +101,15 @@ export default function About() {
               className="flex flex-col justify-center gap-5 px-8 py-10 sm:px-10 lg:py-12"
             >
               <p className="text-base leading-relaxed text-white/80 sm:text-lg">
-                Dengan kualitas dan hasil yang terbukti, Wallpanels.id menghadirkan solusi terbaik untuk
-                memenuhi kebutuhan <span className="font-semibold text-white">interior hunian mewah</span>.
+                wallpanels.id didirikan pada 2018 dengan fokus utama untuk <span className="font-semibold text-white">interior residential dan komersil</span>.
               </p>
               <p className="text-base leading-relaxed text-white/60">
-                Didukung lebih dari <span className="font-semibold text-amber-300">200 tenaga profesional</span> dan
-                layanan se-Indonesia, kami berkomitmen mengubah setiap ruang menjadi pengalaman yang tak lekang oleh waktu —
-                dari konsep dan pemilihan material hingga produksi, pemasangan, dan styling akhir.
+                Didukung team lebih dari <span className="font-semibold text-amber-300">100 tenaga profesional</span> dan
+                pabrik in-house, Melayani seluruh Indonesia. Berpengalaman untuk membuat interior yang berkualitas.
               </p>
               <p className="text-base leading-relaxed text-white/60">
-                Dari hunian eksklusif di Jakarta hingga proyek hospitality di seluruh nusantara,
-                tim kami mewujudkan setiap visi dengan presisi dan sentuhan desain kelas atas.
+                Menyediakan jasa dari pengadaan bahan saja hingga jasa design dan build jika dibutuhkan.
+                Proyek kami tersebar di Jabodetabek hingga seluruh Indonesia.
               </p>
             </motion.div>
 
@@ -147,7 +143,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* ── "Featured In" — dual counter-scrolling marquee ── */}
+        {/* ── "Featured In" - dual counter-scrolling marquee ── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

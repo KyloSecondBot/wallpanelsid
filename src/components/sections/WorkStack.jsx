@@ -10,7 +10,7 @@ const STRENGTHS = [
     icon: '/images/strength-eco.webp',
     title: 'Environmental Protection',
     subtitle: 'Ramah Lingkungan',
-    description: 'Material bebas formaldehida dan dapat didaur ulang. Diproduksi dengan proses ramah lingkungan untuk masa depan yang lebih hijau.',
+    description: 'Diproduksi dengan proses ramah lingkungan untuk masa depan yang lebih hijau.',
     palette_from: '#0d0d0d',
     palette_via: '#111111',
     palette_to: '#000000',
@@ -20,7 +20,7 @@ const STRENGTHS = [
     icon: '/images/strength-flame.webp',
     title: 'Flame-retardant',
     subtitle: 'Tahan Api',
-    description: 'Memenuhi standar ketahanan api kelas B1. Memberikan perlindungan ekstra dan keamanan maksimal untuk hunian maupun ruang komersial.',
+    description: 'Memberikan perlindungan ekstra dan keamanan maksimal, tidak merambat jika terbakar.',
     palette_from: '#0f0f0f',
     palette_via: '#131313',
     palette_to: '#090909',
@@ -28,9 +28,9 @@ const STRENGTHS = [
   {
     id: 's3',
     icon: '/images/strength-water.webp',
-    title: 'Waterproof',
+    title: 'Water Resistance',
     subtitle: 'Tahan Air',
-    description: 'Panel tahan air yang cocok untuk area lembap seperti kamar mandi dan dapur. Tidak mengembang, tidak berjamur.',
+    description: 'Tahan air. Tidak mudah mengembang dan berjamur.',
     palette_from: '#0c0c0c',
     palette_via: '#101010',
     palette_to: '#000000',
@@ -40,7 +40,7 @@ const STRENGTHS = [
     icon: '/images/strength-flex.webp',
     title: 'Bendable / Flexible',
     subtitle: 'Fleksibel',
-    description: 'Dapat dilengkungkan untuk mengikuti kontur dinding melengkung. Fleksibilitas tinggi tanpa mengorbankan kekuatan dan estetika.',
+    description: 'Dapat dilengkungkan untuk membuat variasi yang lebih mewah atau elegan, tidak mengorbankan kekuatan struktural.',
     palette_from: '#0e0e0e',
     palette_via: '#121212',
     palette_to: '#090909',
@@ -50,7 +50,7 @@ const STRENGTHS = [
     icon: '/images/strength-insect.webp',
     title: 'Insect Prevention',
     subtitle: 'Anti Serangga',
-    description: 'Formulasi material yang tahan terhadap rayap dan serangga perusak. Dinding Anda tetap utuh dan bersih dalam jangka panjang.',
+    description: 'Tahan rayap. Aman untuk interior jangka panjang.',
     palette_from: '#0d0d0d',
     palette_via: '#101010',
     palette_to: '#000000',
@@ -76,7 +76,6 @@ export default function WorkStack() {
             Mengapa memilih{' '}
             <AnimatedGradientText as="span">wall panel kami.</AnimatedGradientText>
           </h2>
-          <p className="hidden text-sm text-white/35 sm:block">Scroll untuk melihat</p>
         </div>
       </motion.div>
 

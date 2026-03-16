@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Wallpanels.id | Wall Panel Elegan | Interior Cepat Beres",
-  description: "Wallpanels.id — Wall panel elegan dan modern untuk interior yang tak lekang waktu. Interior Cepat Beres.",
+  title: "wallpanels.id | Wall Panel Elegan | Interior Cepat Beres !",
+  description: "wallpanels.id - Wall panel elegan dan modern untuk interior yang tak lekang waktu. Interior Cepat Beres !",
   icons: {
     icon: "/images/wallpanels-logo.webp",
   },

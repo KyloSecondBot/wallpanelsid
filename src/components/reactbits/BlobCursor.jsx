@@ -12,7 +12,7 @@ export default function BlobCursor() {
   const springY = useSpring(mouseY, { stiffness: 120, damping: 15, mass: 0.4 });
 
   useEffect(() => {
-    /* Skip on touch/mobile devices — saves battery + prevents jank */
+    /* Skip on touch/mobile devices - saves battery + prevents jank */
     if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
       setIsTouchDevice(true);
       return;

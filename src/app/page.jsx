@@ -5,7 +5,6 @@ import BlobCursor from "@/components/reactbits/BlobCursor";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/sections/Hero";
-import Stats from "@/components/sections/Stats";
 import About from "@/components/sections/About";
 import Product from "@/components/sections/Product";
 import WorkStack from "@/components/sections/WorkStack";
@@ -24,7 +23,6 @@ export default function HomePage() {
         <NavBar />
         <main className="space-y-20 pb-12 pt-4 sm:space-y-24">
           <Hero />
-          <Stats />
           <About />
           <Product />
           <WorkStack />

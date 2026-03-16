@@ -2,14 +2,11 @@
 
 import { motion } from 'framer-motion';
 const CONTACT_INFO = {
-  address:        'Jl. Syekh Mubarok No. 1A, Kelapa Dua, Pete, Tigaraksa Kecamatan, Tangerang, Banten 15720',
-  email:          'contact@wallpanels.id',
-  phone:          '0852-1558-1607',
-  whatsapp_link:  'https://wa.me/6285215581607?text=Hello%20Wallpanels.id%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions.',
-  maps_embed_url: 'https://maps.google.com/maps?q=Jl.+Syekh+Mubarok+No.+1A,+Kelapa+Dua,+Pete,+Tigaraksa,+Tangerang,+Banten+15720,+Indonesia&output=embed&hl=en&z=16',
-  maps_link:      'https://maps.google.com/?q=Jl.+Syekh+Mubarok+No.+1A,+Kelapa+Dua,+Pete,+Tigaraksa,+Tangerang,+Banten+15720,+Indonesia',
-  business_hours: 'Mon – Sat · 08.00 – 17.00 WIB',
-  location_label: 'Tigaraksa, Tangerang',
+  address:        'Jl. Raya Serpong, Kec. Serpong Utara, Kota Tangerang Selatan, Banten 15320',
+  email:          'wallpanelsindonesia@gmail.com',
+  phone:          '087888879305',
+  whatsapp_link:  'https://wa.me/6287888879305?text=Hello%20wallpanels.id%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions.',
+  business_hours: 'Mon – Sat · 09.00 – 17.00 WIB',
 };
 
 /* ── Icon helpers ── */
@@ -57,13 +54,10 @@ export default function Contact() {
   const EMAIL         = c.email;
   const PHONE_DISPLAY = c.phone;
   const WA_LINK       = c.whatsapp_link;
-  const MAPS_EMBED    = c.maps_embed_url;
-  const MAPS_LINK     = c.maps_link;
   const HOURS         = c.business_hours;
-  const LOC_LABEL     = c.location_label;
 
   return (
-    <section id="contact" className="px-6 pb-4">
+    <section id="contact" className="px-6">
       <div className="mx-auto max-w-6xl space-y-8">
 
         {/* ── Header ── */}
@@ -77,10 +71,8 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        {/* ── Main grid ── */}
-        <div className="grid gap-5 lg:grid-cols-[1fr,1.4fr]">
-
-          {/* ── LEFT: Info card ── */}
+        {/* ── Contact card ── */}
+        <div className="mx-auto">
           <motion.div
             {...fadeUp(0.08)}
             className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/8 via-white/4 to-white/0 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
@@ -90,23 +82,15 @@ export default function Contact() {
 
             <div className="relative flex flex-col gap-7">
               {/* Address */}
-              <a
-                href={MAPS_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-start gap-4 text-white/65 transition hover:text-white"
-              >
+              <div className="flex items-start gap-4 text-white/65">
                 <span className="mt-0.5 text-amber-400/80">
                   <IconLocation />
                 </span>
                 <div>
                   <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/28">Alamat Kantor</p>
                   <p className="text-sm leading-relaxed">{ADDRESS}</p>
-                  <p className="mt-1.5 text-[11px] font-semibold text-amber-400/55 transition group-hover:text-amber-400">
-                    Buka di Google Maps →
-                  </p>
                 </div>
-              </a>
+              </div>
 
               <div className="h-px bg-white/8" />
 
@@ -126,16 +110,16 @@ export default function Contact() {
 
               <div className="h-px bg-white/8" />
 
-              {/* Phone */}
+              {/* WhatsApp / HP */}
               <a
-                href={`tel:+62${PHONE_DISPLAY.replace(/-/g, '').slice(1)}`}
+                href={`tel:+62${PHONE_DISPLAY.slice(1)}`}
                 className="group flex items-center gap-4 text-white/65 transition hover:text-white"
               >
                 <span className="text-amber-400/80">
                   <IconPhone />
                 </span>
                 <div>
-                  <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/28">Telepon</p>
+                  <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/28">WhatsApp / HP</p>
                   <p className="text-sm font-medium">{PHONE_DISPLAY}</p>
                 </div>
               </a>
@@ -159,41 +143,6 @@ export default function Contact() {
                 {HOURS}
               </p>
             </div>
-          </motion.div>
-
-          {/* ── RIGHT: Google Maps embed ── */}
-          <motion.div
-            {...fadeUp(0.16)}
-            className="relative overflow-hidden rounded-[28px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
-            style={{ minHeight: '420px' }}
-          >
-            {/* Overlay label */}
-            <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-xl border border-white/15 bg-black/80 px-3.5 py-2 backdrop-blur-md">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-amber-300/80">Lokasi Studio</p>
-              <p className="mt-0.5 text-xs text-white/55">{LOC_LABEL}</p>
-            </div>
-
-            {/* "Open in Maps" shortcut */}
-            <a
-              href={MAPS_LINK}
-              target="_blank"
-              rel="noreferrer"
-              className="absolute bottom-4 right-4 z-10 flex items-center gap-2 rounded-xl border border-white/15 bg-black/80 px-3.5 py-2 text-[11px] font-semibold text-white/80 backdrop-blur-md transition hover:text-white"
-            >
-              <IconLocation />
-              Lihat peta lebih besar
-            </a>
-
-            <iframe
-              title="Wallpanels.id Location"
-              src={MAPS_EMBED}
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: '420px', display: 'block', filter: 'invert(90%) hue-rotate(180deg)' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
           </motion.div>
         </div>
       </div>

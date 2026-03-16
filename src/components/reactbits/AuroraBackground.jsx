@@ -1,7 +1,7 @@
 export default function AuroraBackground() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black">
-      {/* Single gold crown glow at top — keeps it luxury without tinting everything warm */}
+      {/* Single gold crown glow at top - keeps it luxury without tinting everything warm */}
       <div
         className="absolute inset-0"
         style={{

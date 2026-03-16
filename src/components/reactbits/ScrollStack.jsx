@@ -34,7 +34,7 @@ const ScrollStack = ({
   const cardsRef = useRef([]);
   const lastTransformsRef = useRef(new Map());
   const isUpdatingRef = useRef(false);
-  // Cached layout offsets — computed once, reused every frame
+  // Cached layout offsets - computed once, reused every frame
   const cardOffsetsRef = useRef([]);
   const endOffsetRef = useRef(0);
 
@@ -60,7 +60,7 @@ const ScrollStack = ({
     }
   }, [useWindowScroll]);
 
-  // Walk offsetParent chain — layout position, unaffected by CSS transforms
+  // Walk offsetParent chain - layout position, unaffected by CSS transforms
   const getDocumentOffset = useCallback((element) => {
     if (!useWindowScroll) return element.offsetTop;
     let top = 0;
@@ -69,7 +69,7 @@ const ScrollStack = ({
     return top;
   }, [useWindowScroll]);
 
-  // Called once on mount + on resize — batch all layout reads up front
+  // Called once on mount + on resize - batch all layout reads up front
   const cacheOffsets = useCallback(() => {
     cardOffsetsRef.current = cardsRef.current.map(card => card ? getDocumentOffset(card) : 0);
     const endEl = useWindowScroll
@@ -241,7 +241,7 @@ const ScrollStack = ({
 
   return (
     <div className={containerClassName} ref={scrollerRef} style={containerStyles}>
-      <div className="scroll-stack-inner pt-[20vh] px-4 pb-[50rem] min-h-screen sm:px-6 lg:px-20">
+      <div className="scroll-stack-inner mx-auto max-w-[1216px] pt-[8vh] px-6 pb-[6rem] min-h-screen sm:px-8">
         {children}
         <div className="scroll-stack-end w-full h-px" />
       </div>

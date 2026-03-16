@@ -8,43 +8,43 @@ const SERIES = [
   {
     id: 'marble',
     title: 'Marble Series',
-    tagline: 'Keanggunan abadi di setiap urat',
-    description: 'Wall panel bermotif marmer premium yang menghadirkan kemegahan batu alam ke dalam interior Anda.',
+    tagline: 'Luxury look. Kesan marmer premium.',
+    description: '',
     image: '/images/1.1.webp',
   },
   {
     id: 'stone',
     title: 'Stone Series',
-    tagline: 'Keindahan alami, permukaan halus',
-    description: 'Tekstur batu alam yang menambah kedalaman dan karakter pada ruang hunian maupun komersial.',
+    tagline: 'Raw and bold. Nuansa batu alam.',
+    description: '',
     image: '/images/2.1.webp',
   },
   {
     id: 'fabric',
     title: 'Fabric Pattern',
-    tagline: 'Tekstur lembut, tampilan elegan',
-    description: 'Pola terinspirasi kain yang memberikan kesan hangat dan sentuhan nyata dengan perawatan mudah.',
+    tagline: 'Tampilan elegan.',
+    description: '',
     image: '/images/1.2.webp',
   },
   {
     id: 'wood',
     title: 'Wood Series',
-    tagline: 'Kehangatan alam, tahan lama',
-    description: 'Panel bermotif kayu untuk interior yang tak lekang waktu — tanpa amplas, tanpa pelapis, tanpa pudar.',
+    tagline: 'Nature look. Warm tropical vibe.',
+    description: '',
     image: '/images/2.2.webp',
   },
   {
     id: 'metal',
     title: 'Metal Series',
-    tagline: 'Sentuhan industrial, tampilan modern',
-    description: 'Finishing metalik elegan untuk ruang kontemporer yang menuntut kesan sophisticated.',
+    tagline: 'Industrial edge. Clean metallic finish.',
+    description: '',
     image: '/images/1.3.webp',
   },
   {
     id: 'profile',
     title: 'Profile Panel',
-    tagline: 'Dimensi bertemu desain',
-    description: 'Panel bertekstur 3D yang mengubah dinding polos menjadi elemen artistik permainan cahaya dan bayangan.',
+    tagline: 'Dimensi 3D. Dinding jadi hidup.',
+    description: '',
     image: '/images/2.3.webp',
   },
 ];
@@ -118,7 +118,7 @@ function CoverCard({ item, index, active, onClick }) {
           isFront ? 'border-amber-400/30 cursor-default' : 'border-white/10 cursor-pointer'
         }`}
       >
-        {/* Image — plain img, no animation */}
+        {/* Image - plain img, no animation */}
         <img
           src={item.image}
           alt={item.title}
@@ -130,12 +130,12 @@ function CoverCard({ item, index, active, onClick }) {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" />
 
-        {/* Active glow edge — only render on front card */}
+        {/* Active glow edge - only render on front card */}
         {isFront && (
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
         )}
 
-        {/* Badge — no backdrop-blur */}
+        {/* Badge - no backdrop-blur */}
         <div className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
           {String(index + 1).padStart(2, '0')}
         </div>
@@ -250,7 +250,7 @@ export default function Product() {
               Wall panel untuk{' '}
               <AnimatedGradientText as="span">setiap visi.</AnimatedGradientText>
             </h2>
-            <p className="text-sm text-white/35">6 seri · Kemungkinan tak terbatas</p>
+
           </div>
         </motion.div>
 
@@ -270,7 +270,7 @@ export default function Product() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-20 bg-gradient-to-r from-black to-transparent sm:w-32" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-20 bg-gradient-to-l from-black to-transparent sm:w-32" />
 
-          {/* Ambient glow — subtle, no blur */}
+          {/* Ambient glow - subtle, no blur */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-amber-400/4 blur-3xl" />
 
           {/* Cards */}
@@ -288,7 +288,7 @@ export default function Product() {
 
         </div>
 
-        {/* Dots + swipe hint — tight to carousel */}
+        {/* Dots + swipe hint - tight to carousel */}
         <div className="mt-2 flex flex-col items-center gap-2">
           <div className="flex items-center gap-2">
             {SERIES.map((item, i) => (
@@ -317,7 +317,7 @@ export default function Product() {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-5 max-w-lg text-center"
           >
-            <p className="text-base leading-relaxed text-white/55">{SERIES[active].description}</p>
+            {SERIES[active].description && <p className="text-base leading-relaxed text-white/55">{SERIES[active].description}</p>}
           </motion.div>
         </AnimatePresence>
 

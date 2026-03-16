@@ -3,12 +3,12 @@
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-// Mosaic fallback images — above the fold (LCP)
+// Mosaic fallback images - above the fold (LCP)
 const img11 = '/images/1.1.webp';
 const img21 = '/images/2.1.webp';
 const img13 = '/images/1.3.webp';
 
-// Marquee strip — lazy loaded
+// Marquee strip - lazy loaded
 const img12 = '/images/1.2.webp';
 const img14 = '/images/1.4.webp';
 const img15 = '/images/1.5.webp';
@@ -87,7 +87,7 @@ export default function Hero() {
             Studio Desain Interior · Sejak 2018
           </motion.div>
 
-          {/* Headline — clip reveal per line */}
+          {/* Headline - clip reveal per line */}
           <h1 className="flex flex-col gap-0 text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-[82px]">
             {HEADLINE_LINES.map(({ text, accent }, i) => (
               <div key={i} className="overflow-hidden">
@@ -116,9 +116,9 @@ export default function Hero() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.38 }}
             className="max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
           >
-            Wallpanels.id menghadirkan solusi wall panel elegan untuk hunian, ruang komersial,
-            dan tempat kerja modern — dari pemilihan material hingga pemasangan sempurna.
-            Interior Cepat Beres.
+            wallpanels.id menghadirkan solusi wall panel elegan untuk hunian, ruang komersial,
+            dan tempat kerja modern - dari pemilihan material hingga pemasangan sempurna.
+            Interior Cepat Beres !
           </motion.p>
 
           {/* CTAs */}
@@ -146,30 +146,12 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Micro-stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.58 }}
-            className="mt-2 grid grid-cols-3 gap-4 border-t border-white/10 pt-6"
-          >
-            {[
-              { v: '80+', l: 'Proyek selesai' },
-              { v: '6', l: 'Proyek berjalan' },
-              { v: '100%', l: 'Kepuasan klien' },
-            ].map(({ v, l }) => (
-              <div key={l} className="flex flex-col gap-0.5">
-                <span className="font-display text-2xl font-semibold text-white sm:text-3xl">{v}</span>
-                <span className="text-xs text-white/38">{l}</span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* ── RIGHT: Image mosaic ── */}
         <div className="relative grid h-[480px] grid-cols-2 grid-rows-2 gap-3 sm:h-[560px] lg:h-[640px]">
 
-          {/* Card 1 — tall, spans both rows */}
+          {/* Card 1 - tall, spans both rows */}
           <motion.div
             className="relative row-span-2 overflow-hidden rounded-3xl bg-zinc-900"
             initial={reduce ? false : { opacity: 0, x: 48 }}
@@ -180,7 +162,7 @@ export default function Hero() {
               <motion.img
                 key={srcs[0]}
                 src={srcs[0]}
-                alt="Luxury residence by Wallpanels.id"
+                alt="Luxury residence by wallpanels.id"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="eager"
                 fetchPriority="high"
@@ -204,7 +186,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Card 2 — top right */}
+          {/* Card 2 - top right */}
           <motion.div
             className="relative overflow-hidden rounded-3xl bg-zinc-900"
             initial={reduce ? false : { opacity: 0, x: 48 }}
@@ -215,7 +197,7 @@ export default function Hero() {
               <motion.img
                 key={srcs[1]}
                 src={srcs[1]}
-                alt="Wallpanels.id hospitality interior"
+                alt="wallpanels.id hospitality interior"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
                 initial={{ opacity: 0 }}
@@ -227,7 +209,7 @@ export default function Hero() {
             <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-white/5 via-transparent to-slate-950/45" />
           </motion.div>
 
-          {/* Card 3 — bottom right */}
+          {/* Card 3 - bottom right */}
           <motion.div
             className="relative overflow-hidden rounded-3xl bg-zinc-900"
             initial={reduce ? false : { opacity: 0, x: 48 }}
@@ -238,7 +220,7 @@ export default function Hero() {
               <motion.img
                 key={srcs[2]}
                 src={srcs[2]}
-                alt="Wallpanels.id workspace design"
+                alt="wallpanels.id workspace design"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
                 initial={{ opacity: 0 }}
@@ -248,15 +230,6 @@ export default function Hero() {
               />
             </AnimatePresence>
             <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-            {/* Floating project count badge */}
-            <motion.div
-              className="absolute right-3 top-3 z-20 rounded-2xl border border-white/15 bg-black/85 px-3 py-2 text-center sm:bg-black/70 sm:backdrop-blur-md"
-              animate={reduce ? {} : { y: [0, -5, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
-            >
-              <span className="font-display block text-xl font-bold text-white leading-none">12+</span>
-              <span className="text-[10px] text-white/38">Projects</span>
-            </motion.div>
           </motion.div>
 
           {/* Ambient glow orbs */}

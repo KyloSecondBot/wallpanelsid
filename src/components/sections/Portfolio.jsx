@@ -126,7 +126,7 @@ export default function Portfolio() {
               // Parse numeric value from metric_value string (e.g. "38%" → 38)
               const numericValue = parseFloat(project.metric_value) || 0;
               const suffix = project.metric_value?.replace(/[\d.]/g, '') ?? '';
-              // Fallback cards use ids starting with 'f' — don't link those
+              // Fallback cards use ids starting with 'f' - don't link those
               const isLive = !String(project.id).startsWith('f');
               const card = (
                 <GlareHover>
