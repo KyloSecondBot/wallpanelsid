@@ -216,7 +216,7 @@ function PressRow({ logos, className, paused }) {
  */
 function PressCard({ logo }) {
   return (
-    <div className="press-pill group flex-none flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.07] px-7 py-5">
+    <div className="press-pill group flex-none flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.07] px-7 py-5 sm:backdrop-blur-sm">
       <div className="flex h-10 w-32 items-center justify-center">
         <img
           src={logo.src}

@@ -82,6 +82,16 @@ body {
   }
 }
 
+/* Animated gradient text — CSS animation on compositor, not JS main thread */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient-text {
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
 /* Hide scrollbar — used by snap carousels */
 .no-scrollbar {
   -ms-overflow-style: none;

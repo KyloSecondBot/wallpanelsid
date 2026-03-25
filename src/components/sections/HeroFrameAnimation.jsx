@@ -25,7 +25,8 @@ import {
  * ===================================================================== */
 
 const TOTAL_FRAMES = 192;
-const SCROLL_SCREENS = 5; // 500vh scroll runway
+const SCROLL_SCREENS_DESKTOP = 5;  // 500vh on desktop
+const SCROLL_SCREENS_MOBILE = 7;   // 700vh on mobile — slower, more deliberate scroll
 
 /** Public path for frame i (0-indexed → 1-indexed, zero-padded to 3). */
 const frameSrc = (i) =>
@@ -46,10 +47,19 @@ export default function HeroFrameAnimation() {
   const [loading, setLoading] = useState(true);
   const [loadPct, setLoadPct] = useState(0);
   const [revealed, setRevealed] = useState(false); // entrance animations gate
+  const [scrollScreens, setScrollScreens] = useState(SCROLL_SCREENS_DESKTOP);
+
+  /* Adjust scroll runway for mobile (slower, more deliberate scroll) */
+  useEffect(() => {
+    const check = () => setScrollScreens(window.innerWidth < 640 ? SCROLL_SCREENS_MOBILE : SCROLL_SCREENS_DESKTOP);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   /* ── Refs ─────────────────────────────────────────────────── */
   const canvasRef = useRef(null);
-  const sectionRef = useRef(null); // outer 500vh scroll runway
+  const sectionRef = useRef(null); // outer scroll runway
   const ctxRef = useRef(null);     // cached canvas 2d context
   const framesRef = useRef([]);    // preloaded Image objects
   const lastIdxRef = useRef(-1);   // last drawn frame (skip redraw if same)
@@ -178,14 +188,18 @@ export default function HeroFrameAnimation() {
     if (!section) return;
 
     let active = false;
+    let scrollY = 0;
 
-    /* rAF tick — decoupled from scroll events for jank-free rendering */
+    /* Cache scroll position from passive listener (no layout thrash) */
+    const onScroll = () => { scrollY = window.scrollY; };
+
+    /* rAF tick — reads cached scrollY, avoids getBoundingClientRect */
     const tick = () => {
       if (!active) return;
 
-      const rect = section.getBoundingClientRect();
+      const sectionTop = section.offsetTop;
       const range = section.offsetHeight - window.innerHeight;
-      const t = Math.max(0, Math.min(1, -rect.top / range));
+      const t = Math.max(0, Math.min(1, (scrollY - sectionTop) / range));
 
       // Drive text overlay transforms (no React re-render)
       scrollProg.set(t);
@@ -202,14 +216,12 @@ export default function HeroFrameAnimation() {
       rafRef.current = requestAnimationFrame(tick);
     };
 
-    /* Passive scroll listener — never blocks the main thread */
-    const onScroll = () => {};
-
     /* IntersectionObserver — only run rAF when section is in view */
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           active = true;
+          scrollY = window.scrollY;
           window.addEventListener('scroll', onScroll, { passive: true });
           rafRef.current = requestAnimationFrame(tick);
         } else {
@@ -258,7 +270,7 @@ export default function HeroFrameAnimation() {
       ref={sectionRef}
       id="top"
       className="relative"
-      style={{ height: `${SCROLL_SCREENS * 100}vh`, background: '#000' }}
+      style={{ height: `${scrollScreens * 100}vh`, background: '#000' }}
     >
       {/* ── Sticky viewport (pinned at top:0 while scrolling the runway) ── */}
       <div

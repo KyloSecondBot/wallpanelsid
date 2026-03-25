@@ -153,12 +153,28 @@ const ScrollStack = ({
   const handleScroll = useCallback(() => { updateCardTransforms(); }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
     if (useWindowScroll) {
+      if (isTouchDevice) {
+        // Mobile: skip Lenis entirely — native touch scroll is hardware-accelerated.
+        // Just use a passive scroll listener + rAF for transform updates.
+        const onNativeScroll = () => {
+          if (animationFrameRef.current) return;
+          animationFrameRef.current = requestAnimationFrame(() => {
+            animationFrameRef.current = null;
+            handleScroll();
+          });
+        };
+        window.addEventListener('scroll', onNativeScroll, { passive: true });
+        lenisRef.current = { destroy: () => window.removeEventListener('scroll', onNativeScroll) };
+        return lenisRef.current;
+      }
       const lenis = new Lenis({
         duration: 1.2,
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true, touchMultiplier: 2, infinite: false,
-        wheelMultiplier: 1, lerp: 0.1, syncTouch: true, syncTouchLerp: 0.075,
+        smoothWheel: true, touchMultiplier: 1, infinite: false,
+        wheelMultiplier: 1, lerp: 0.1, syncTouch: false,
       });
       lenis.on('scroll', handleScroll);
       const raf = time => { lenis.raf(time); animationFrameRef.current = requestAnimationFrame(raf); };
@@ -168,13 +184,25 @@ const ScrollStack = ({
     } else {
       const scroller = scrollerRef.current;
       if (!scroller) return;
+      if (isTouchDevice) {
+        const onNativeScroll = () => {
+          if (animationFrameRef.current) return;
+          animationFrameRef.current = requestAnimationFrame(() => {
+            animationFrameRef.current = null;
+            handleScroll();
+          });
+        };
+        scroller.addEventListener('scroll', onNativeScroll, { passive: true });
+        lenisRef.current = { destroy: () => scroller.removeEventListener('scroll', onNativeScroll) };
+        return lenisRef.current;
+      }
       const lenis = new Lenis({
         wrapper: scroller,
         content: scroller.querySelector('.scroll-stack-inner'),
         duration: 1.2,
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true, touchMultiplier: 2, infinite: false,
-        wheelMultiplier: 1, lerp: 0.1, syncTouch: true, syncTouchLerp: 0.075,
+        smoothWheel: true, touchMultiplier: 1, infinite: false,
+        wheelMultiplier: 1, lerp: 0.1, syncTouch: false,
       });
       lenis.on('scroll', handleScroll);
       const raf = time => { lenis.raf(time); animationFrameRef.current = requestAnimationFrame(raf); };
@@ -199,13 +227,11 @@ const ScrollStack = ({
 
     cards.forEach((card, i) => {
       if (i < cards.length - 1) card.style.marginBottom = `${itemDistance}px`;
-      card.style.willChange = 'transform, filter';
+      card.style.willChange = blurAmount ? 'transform, filter' : 'transform';
       card.style.transformOrigin = 'top center';
       card.style.backfaceVisibility = 'hidden';
       card.style.transform = 'translateZ(0)';
       card.style.webkitTransform = 'translateZ(0)';
-      card.style.perspective = '1000px';
-      card.style.webkitPerspective = '1000px';
     });
 
     // Cache offsets AFTER layout is settled, BEFORE any transforms are applied
