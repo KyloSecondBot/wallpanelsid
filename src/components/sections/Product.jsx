@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.jsx';
 
@@ -9,234 +9,133 @@ const SERIES = [
     id: 'marble',
     title: 'Marble Series',
     tagline: 'Luxury look. Kesan marmer premium.',
-    description: '',
     image: '/images/1.1.webp',
   },
   {
     id: 'stone',
     title: 'Stone Series',
     tagline: 'Raw and bold. Nuansa batu alam.',
-    description: '',
     image: '/images/2.1.webp',
   },
   {
     id: 'fabric',
     title: 'Fabric Pattern',
     tagline: 'Tampilan elegan.',
-    description: '',
     image: '/images/1.2.webp',
   },
   {
     id: 'wood',
     title: 'Wood Series',
     tagline: 'Nature look. Warm tropical vibe.',
-    description: '',
     image: '/images/2.2.webp',
   },
   {
     id: 'metal',
     title: 'Metal Series',
     tagline: 'Industrial edge. Clean metallic finish.',
-    description: '',
     image: '/images/1.3.webp',
   },
   {
     id: 'profile',
     title: 'Profile Panel',
     tagline: 'Dimensi 3D. Dinding jadi hidup.',
-    description: '',
     image: '/images/2.3.webp',
   },
 ];
 
 const COUNT = SERIES.length;
-
-/* Shortest circular offset: -2, -1, 0, 1, 2, 3 */
-function getOffset(i, active) {
-  let diff = i - active;
-  if (diff > COUNT / 2) diff -= COUNT;
-  if (diff < -COUNT / 2) diff += COUNT;
-  return diff;
-}
-
-/* Position + style each card based on offset from center */
-function getCardStyle(offset) {
-  const abs = Math.abs(offset);
-  if (abs === 0) return { x: 0, rotateY: 0, scale: 1, z: 10, opacity: 1 };
-  if (abs === 1) return { x: offset * 290, rotateY: offset * -32, scale: 0.82, z: 0, opacity: 0.55 };
-  if (abs === 2) return { x: offset * 420, rotateY: offset * -45, scale: 0.66, z: -60, opacity: 0.25 };
-  return { x: 0, rotateY: 0, scale: 0.5, z: -100, opacity: 0 };
-}
-
-/* Blinking swipe hint */
-function SwipeHint({ visible }) {
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.7, 0, 0.7, 0] }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="pointer-events-none"
-        >
-          <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
-            Geser untuk jelajahi
-          </span>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
-/* ── Single coverflow card ── */
-function CoverCard({ item, index, active, onClick }) {
-  const offset = getOffset(index, active);
-  const style = getCardStyle(offset);
-  const isFront = offset === 0;
-  const abs = Math.abs(offset);
-
-  return (
-    <motion.div
-      className="absolute left-1/2 top-0 w-[280px] h-[400px] sm:w-[320px] sm:h-[440px] origin-center will-change-transform"
-      style={{ perspective: 1200, backfaceVisibility: 'hidden' }}
-      animate={{
-        x: `calc(-50% + ${style.x}px)`,
-        rotateY: style.rotateY,
-        scale: style.scale,
-        opacity: style.opacity,
-        zIndex: 10 - abs,
-      }}
-      transition={{ type: 'spring', stiffness: 260, damping: 30 }}
-      onClick={() => onClick(index)}
-      role="button"
-      tabIndex={0}
-      aria-label={`View ${item.title}`}
-    >
-      <div
-        className={`relative h-full w-full overflow-hidden rounded-3xl border shadow-lg shadow-black/40 transition-colors duration-300 ${
-          isFront ? 'border-amber-400/30 cursor-default' : 'border-white/10 cursor-pointer'
-        }`}
-      >
-        {/* Image - plain img, no animation */}
-        <img
-          src={item.image}
-          alt={item.title}
-          className="absolute inset-0 h-full w-full object-cover"
-          loading={index < 3 ? 'eager' : 'lazy'}
-          decoding="async"
-        />
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" />
-
-        {/* Active glow edge - only render on front card */}
-        {isFront && (
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
-        )}
-
-        {/* Badge - no backdrop-blur */}
-        <div className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
-          {String(index + 1).padStart(2, '0')}
-        </div>
-
-        {/* Content */}
-        <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 p-5 sm:p-6">
-          <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl leading-tight">
-            {item.title}
-          </h3>
-          <p className="text-sm font-medium text-amber-300/80">{item.tagline}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+const GAP = 16; // gap-4 = 16px
 
 export default function Product() {
+  const scrollRef = useRef(null);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [showHint, setShowHint] = useState(true);
-  const touchRef = useRef({ startX: 0, startY: 0, swiped: false });
+  const pauseTimerRef = useRef(null);
+  const rafRef = useRef(0);
 
-  const next = useCallback(() => setActive((p) => (p + 1) % COUNT), []);
-  const prev = useCallback(() => setActive((p) => (p - 1 + COUNT) % COUNT), []);
+  /* Card width based on breakpoint (must match Tailwind classes) */
+  const getStep = useCallback(() => {
+    const cardW = window.innerWidth >= 640 ? 320 : 280;
+    return cardW + GAP;
+  }, []);
 
-  /* Auto-rotate */
+  /* ── Detect active card from native scroll position ── */
+  const syncActive = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = getStep();
+    /* scrollLeft = i * step when card i is centered (spacers handle the offset) */
+    const idx = Math.round(el.scrollLeft / step);
+    setActive(Math.max(0, Math.min(idx, COUNT - 1)));
+  }, [getStep]);
+
+  /* rAF-throttled scroll listener */
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(syncActive);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [syncActive]);
+
+  /* ── Scroll to a specific card index ── */
+  const scrollToCard = useCallback((idx) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: idx * getStep(), behavior: 'smooth' });
+  }, [getStep]);
+
+  /* ── Auto-advance every 4s ── */
   useEffect(() => {
     if (paused) return;
-    const timer = setInterval(next, 4000);
+    const timer = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % COUNT;
+        scrollToCard(next);
+        return next;
+      });
+    }, 4000);
     return () => clearInterval(timer);
-  }, [paused, next]);
+  }, [paused, scrollToCard]);
 
-  /* Hide swipe hint after 6 seconds or on first interaction */
-  useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 6000);
-    return () => clearTimeout(timer);
-  }, []);
-
+  /* ── Pause on interaction, resume after 8s ── */
   const pauseAutoplay = useCallback(() => {
     setPaused(true);
-    setTimeout(() => setPaused(false), 8000);
+    clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => setPaused(false), 8000);
   }, []);
 
-  const handleInteraction = useCallback(() => {
-    setShowHint(false);
-    pauseAutoplay();
+  useEffect(() => () => clearTimeout(pauseTimerRef.current), []);
+
+  /* Pause on touch/mouse interaction */
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = () => pauseAutoplay();
+    el.addEventListener('touchstart', handler, { passive: true });
+    el.addEventListener('mousedown', handler);
+    return () => {
+      el.removeEventListener('touchstart', handler);
+      el.removeEventListener('mousedown', handler);
+    };
   }, [pauseAutoplay]);
 
-  const handleClick = (i) => {
-    if (i === active) return;
+  const handleDot = (i) => {
+    scrollToCard(i);
     setActive(i);
-    handleInteraction();
-  };
-
-  /* Touch swipe handlers */
-  const onTouchStart = (e) => {
-    touchRef.current = {
-      startX: e.touches[0].clientX,
-      startY: e.touches[0].clientY,
-      swiped: false,
-    };
-  };
-
-  const onTouchMove = (e) => {
-    if (touchRef.current.swiped) return;
-    const dx = e.touches[0].clientX - touchRef.current.startX;
-    const dy = e.touches[0].clientY - touchRef.current.startY;
-    /* Only trigger if horizontal movement is dominant */
-    if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-      touchRef.current.swiped = true;
-      if (dx < 0) next(); else prev();
-      handleInteraction();
-    }
-  };
-
-  /* Mouse drag for desktop */
-  const mouseRef = useRef({ startX: 0, dragging: false });
-
-  const onMouseDown = (e) => {
-    mouseRef.current = { startX: e.clientX, dragging: true };
-  };
-
-  const onMouseMove = (e) => {
-    if (!mouseRef.current.dragging) return;
-    const dx = e.clientX - mouseRef.current.startX;
-    if (Math.abs(dx) > 50) {
-      mouseRef.current.dragging = false;
-      if (dx < 0) next(); else prev();
-      handleInteraction();
-    }
-  };
-
-  const onMouseUp = () => {
-    mouseRef.current.dragging = false;
+    pauseAutoplay();
   };
 
   return (
-    <section id="portfolio-product" className="px-6">
-      <div className="mx-auto max-w-6xl">
-
-        {/* Header */}
+    <section id="portfolio-product">
+      {/* Header — contained */}
+      <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -245,82 +144,98 @@ export default function Product() {
           className="mb-6"
         >
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Koleksi Kami</p>
-          <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mt-2">
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Wall panel untuk{' '}
               <AnimatedGradientText as="span">setiap visi.</AnimatedGradientText>
             </h2>
-
           </div>
         </motion.div>
+      </div>
 
-        {/* Coverflow carousel */}
+      {/* ── Full-width scroll-snap carousel ── */}
+      <div className="relative">
+        {/* Side fade masks */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-black to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-black to-transparent sm:w-24" />
+
+        {/* Scrollable track */}
         <div
-          className="relative mx-auto overflow-hidden cursor-grab active:cursor-grabbing select-none"
-          style={{ height: '480px' }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => { setPaused(false); onMouseUp(); }}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
+          ref={scrollRef}
+          className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
         >
-          {/* Side fade masks */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-20 bg-gradient-to-r from-black to-transparent sm:w-32" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-20 bg-gradient-to-l from-black to-transparent sm:w-32" />
+          {/*
+            Spacer = 50vw - cardW/2 - gap
+            Mobile: 50vw - 140 - 16 = 50vw - 156px
+            SM+:    50vw - 160 - 16 = 50vw - 176px
+            This ensures card 0 is centered when scrollLeft = 0.
+          */}
+          <div
+            className="shrink-0 w-[calc(50vw_-_156px)] sm:w-[calc(50vw_-_176px)]"
+            aria-hidden="true"
+          />
 
-          {/* Ambient glow - subtle, no blur */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-amber-400/4 blur-3xl" />
+          {SERIES.map((item, i) => {
+            const isActive = i === active;
+            return (
+              <div key={item.id} className="shrink-0 snap-center">
+                <div
+                  className={`relative h-[400px] w-[280px] overflow-hidden rounded-3xl border shadow-lg shadow-black/40 transition-all duration-500 sm:h-[440px] sm:w-[320px] ${
+                    isActive
+                      ? 'border-amber-400/40 scale-100 opacity-100'
+                      : 'border-white/10 scale-[0.92] opacity-60'
+                  }`}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading={i < 3 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" />
 
-          {/* Cards */}
-          <div className="relative h-full w-full" style={{ perspective: '1200px' }}>
-            {SERIES.map((item, i) => (
-              <CoverCard
-                key={item.id}
-                item={item}
-                index={i}
-                active={active}
-                onClick={handleClick}
-              />
-            ))}
-          </div>
+                  {isActive && (
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+                  )}
 
+                  <div className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+
+                  <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 p-5 sm:p-6">
+                    <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm font-medium text-amber-300/80">{item.tagline}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Trailing spacer — centers last card */}
+          <div
+            className="shrink-0 w-[calc(50vw_-_156px)] sm:w-[calc(50vw_-_176px)]"
+            aria-hidden="true"
+          />
         </div>
+      </div>
 
-        {/* Dots + swipe hint - tight to carousel */}
-        <div className="mt-2 flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2">
-            {SERIES.map((item, i) => (
-              <button
-                key={item.id}
-                onClick={() => handleClick(i)}
-                aria-label={`View ${item.title}`}
-                className={`rounded-full transition-all duration-300 ${
-                  i === active
-                    ? 'h-2 w-7 bg-amber-400'
-                    : 'h-2 w-2 bg-white/20 hover:bg-white/40'
-                }`}
-              />
-            ))}
-          </div>
-          <SwipeHint visible={showHint} />
-        </div>
-
-        {/* Description panel */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={SERIES[active].id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-5 max-w-lg text-center"
-          >
-            {SERIES[active].description && <p className="text-base leading-relaxed text-white/55">{SERIES[active].description}</p>}
-          </motion.div>
-        </AnimatePresence>
-
+      {/* Dots */}
+      <div className="mt-4 flex justify-center gap-2">
+        {SERIES.map((item, i) => (
+          <button
+            key={item.id}
+            onClick={() => handleDot(i)}
+            aria-label={`View ${item.title}`}
+            className={`rounded-full transition-all duration-300 ${
+              i === active
+                ? 'h-2 w-7 bg-amber-400'
+                : 'h-2 w-2 bg-white/20 hover:bg-white/40'
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
