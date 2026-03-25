@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 // Press / media logos
 const logoBloomberg  = '/images/Bloomberg Logo.webp';
@@ -144,38 +145,62 @@ export default function About() {
         </div>
 
         {/* ── "Featured In" - dual counter-scrolling marquee ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-8%' }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="space-y-5"
-        >
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.32em] text-white/35">
-            Diliput Oleh
-          </p>
-
-          {/* ── Row 1: scrolls left ── */}
-          <PressRow logos={PRESS} className="press-track" />
-
-          {/* ── Row 2: scrolls right (reversed order for contrast) ── */}
-          <PressRow logos={[...PRESS].reverse()} className="press-track-reverse" />
-
-          <p className="text-center text-xs text-white/28">Dan berbagai media ternama lainnya.</p>
-        </motion.div>
+        <PressBanner press={PRESS} />
 
       </div>
     </section>
   );
 }
 
+/*
+ * PressBanner — IO-gated marquee.
+ * Pauses CSS animation when scrolled off-screen so it doesn't eat GPU
+ * while the user is elsewhere on the page.
+ */
+function PressBanner({ press }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { rootMargin: '200px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-8%' }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-5"
+    >
+      <p className="text-center text-xs font-semibold uppercase tracking-[0.32em] text-white/35">
+        Diliput Oleh
+      </p>
+      <PressRow logos={press} className="press-track" paused={!visible} />
+      <PressRow logos={[...press].reverse()} className="press-track-reverse" paused={!visible} />
+      <p className="text-center text-xs text-white/28">Dan berbagai media ternama lainnya.</p>
+    </motion.div>
+  );
+}
+
 /* ── PressRow: one scrolling strip ── */
-function PressRow({ logos, className }) {
+function PressRow({ logos, className, paused }) {
   return (
     <div className="relative overflow-hidden py-1">
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-black to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-black to-transparent" />
-      <div className={`${className} flex w-max items-center gap-4`}>
+      <div
+        className={`${className} flex w-max items-center gap-4`}
+        style={{ animationPlayState: paused ? 'paused' : 'running' }}
+      >
         {[...logos, ...logos].map((logo, i) => (
           <PressCard key={i} logo={logo} />
         ))}
@@ -184,10 +209,14 @@ function PressRow({ logos, className }) {
   );
 }
 
-/* ── PressCard: individual logo pill ── */
+/*
+ * PressCard — individual logo pill.
+ * NO backdrop-blur (was causing 28 Gaussian blurs per frame on mobile).
+ * Solid semi-transparent bg instead.
+ */
 function PressCard({ logo }) {
   return (
-    <div className="press-pill group flex-none flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-5 backdrop-blur-sm">
+    <div className="press-pill group flex-none flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.07] px-7 py-5">
       <div className="flex h-10 w-32 items-center justify-center">
         <img
           src={logo.src}

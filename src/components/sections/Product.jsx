@@ -55,12 +55,20 @@ function getOffset(i, active) {
 
 /*
  * CSS-driven coverflow styles per offset.
- * Returns an inline style object — the browser compositor handles the
- * transition entirely on the GPU via the CSS transition below.
- * Zero JS animation loops, zero Framer Motion spring recalculations.
+ * Desktop: full 3D with rotateY + perspective (looks premium).
+ * Mobile:  flat 2D with translateX + scale only (no 3D = much lighter on GPU).
+ * The browser compositor handles the CSS transition on the GPU — zero JS per frame.
  */
-function getCardTransform(offset) {
+function getCardTransform(offset, isMobile) {
   const abs = Math.abs(offset);
+  if (isMobile) {
+    /* 2D layout — no rotateY, no perspective needed */
+    if (abs === 0) return { transform: 'translateX(-50%) scale(1)', zIndex: 10, opacity: 1 };
+    if (abs === 1) return { transform: `translateX(calc(-50% + ${offset * 200}px)) scale(0.85)`, zIndex: 5, opacity: 0.5 };
+    if (abs === 2) return { transform: `translateX(calc(-50% + ${offset * 340}px)) scale(0.72)`, zIndex: 2, opacity: 0.2 };
+    return { transform: 'translateX(-50%) scale(0.5)', zIndex: 0, opacity: 0 };
+  }
+  /* Desktop: full 3D coverflow */
   if (abs === 0) return { transform: 'translateX(-50%) rotateY(0deg) scale(1)', zIndex: 10, opacity: 1 };
   if (abs === 1) return { transform: `translateX(calc(-50% + ${offset * 290}px)) rotateY(${offset * -32}deg) scale(0.82)`, zIndex: 5, opacity: 0.55 };
   if (abs === 2) return { transform: `translateX(calc(-50% + ${offset * 420}px)) rotateY(${offset * -45}deg) scale(0.66)`, zIndex: 2, opacity: 0.25 };
@@ -70,8 +78,17 @@ function getCardTransform(offset) {
 export default function Product() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pauseTimerRef = useRef(null);
   const touchRef = useRef({ startX: 0, startY: 0, swiped: false });
+
+  /* Detect mobile once on mount + resize */
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const next = useCallback(() => setActive((p) => (p + 1) % COUNT), []);
   const prev = useCallback(() => setActive((p) => (p - 1 + COUNT) % COUNT), []);
@@ -185,10 +202,10 @@ export default function Product() {
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-amber-400/4 blur-3xl" />
 
           {/* Cards — positioned with CSS transforms + transition */}
-          <div className="relative h-full w-full" style={{ perspective: '1200px' }}>
+          <div className="relative h-full w-full" style={isMobile ? undefined : { perspective: '1200px' }}>
             {SERIES.map((item, i) => {
               const offset = getOffset(i, active);
-              const style = getCardTransform(offset);
+              const style = getCardTransform(offset, isMobile);
               const isFront = offset === 0;
               const abs = Math.abs(offset);
 
