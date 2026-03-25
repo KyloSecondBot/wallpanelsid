@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next:*)",
+      "Bash(for f:*)",
+      "Bash(do mv:*)",
+      "Bash(done)",
+      "mcp__vercel__deploy_to_vercel",
+      "mcp__vercel__list_deployments",
+      "mcp__vercel__get_deployment",
+      "Bash(grep -r \"press-track\\\\|press-pill\" C:UsersthimoOneDriveDocumentsGitHubwallpanelsid --include=*.css --include=*.scss)",
+      "Bash(find C:UsersthimoOneDriveDocumentsGitHubwallpanelsidpublicimages -type f -name *Bloomberg* -o -name *Forbes* -o -name *press*)",
+      "Bash(cd:*)",
+      "Bash(mv wallpanels-logo.webp jh-logo.webp logo/)",
+      "Bash(mv \"Bloomberg Logo.webp\" \"Forbes Logo.webp\" \"Vogue-Logo.webp\" \"cnbc indonesia Logo.webp\" \"Tempo Logo.webp\" \"CNN_Indonesia Logo.webp\" \"tribunnews Logo.webp\" press/)",
+      "Bash(mv 1.1.webp 1.2.webp 1.3.webp 2.1.webp 2.2.webp 2.3.webp product/)",
+      "Bash(mv 1.4.webp 1.5.webp 2.4.webp 2.6.webp 2.7.webp 2.8.webp portfolio/)",
+      "Bash(mv strength-eco.webp strength-flame.webp strength-water.webp strength-flex.webp strength-insect.webp strength/)"
+    ]
+  }
+}

@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 // Press / media logos
-const logoBloomberg  = '/images/Bloomberg Logo.webp';
-const logoForbes     = '/images/Forbes Logo.webp';
-const logoVogue      = '/images/Vogue-Logo.webp';
-const logoCNBC       = '/images/cnbc indonesia Logo.webp';
-const logoTempo      = '/images/Tempo Logo.webp';
-const logoCNN        = '/images/CNN_Indonesia Logo.webp';
-const logoTribun     = '/images/tribunnews Logo.webp';
+const logoBloomberg  = '/images/press/Bloomberg Logo.webp';
+const logoForbes     = '/images/press/Forbes Logo.webp';
+const logoVogue      = '/images/press/Vogue-Logo.webp';
+const logoCNBC       = '/images/press/cnbc indonesia Logo.webp';
+const logoTempo      = '/images/press/Tempo Logo.webp';
+const logoCNN        = '/images/press/CNN_Indonesia Logo.webp';
+const logoTribun     = '/images/press/tribunnews Logo.webp';
 
 const PRESS = [
   { src: logoBloomberg, alt: 'Bloomberg',      forceWhite: true  },

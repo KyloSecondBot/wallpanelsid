@@ -4,7 +4,7 @@ export const metadata = {
   title: "wallpanels.id | Wall Panel Elegan | Interior Cepat Beres !",
   description: "wallpanels.id - Wall panel elegan dan modern untuk interior yang tak lekang waktu. Interior Cepat Beres !",
   icons: {
-    icon: "/images/wallpanels-logo.webp",
+    icon: "/images/logo/wallpanels-logo.webp",
   },
 };
 

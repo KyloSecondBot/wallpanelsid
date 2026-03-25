@@ -9,37 +9,37 @@ const SERIES = [
     id: 'marble',
     title: 'Marble Series',
     tagline: 'Luxury look. Kesan marmer premium.',
-    image: '/images/1.1.webp',
+    image: '/images/product/1.1.webp',
   },
   {
     id: 'stone',
     title: 'Stone Series',
     tagline: 'Raw and bold. Nuansa batu alam.',
-    image: '/images/2.1.webp',
+    image: '/images/product/2.1.webp',
   },
   {
     id: 'fabric',
     title: 'Fabric Pattern',
     tagline: 'Tampilan elegan.',
-    image: '/images/1.2.webp',
+    image: '/images/product/1.2.webp',
   },
   {
     id: 'wood',
     title: 'Wood Series',
     tagline: 'Nature look. Warm tropical vibe.',
-    image: '/images/2.2.webp',
+    image: '/images/product/2.2.webp',
   },
   {
     id: 'metal',
     title: 'Metal Series',
     tagline: 'Industrial edge. Clean metallic finish.',
-    image: '/images/1.3.webp',
+    image: '/images/product/1.3.webp',
   },
   {
     id: 'profile',
     title: 'Profile Panel',
     tagline: 'Dimensi 3D. Dinding jadi hidup.',
-    image: '/images/2.3.webp',
+    image: '/images/product/2.3.webp',
   },
 ];
 

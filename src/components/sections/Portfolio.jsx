@@ -9,15 +9,15 @@ import CountUp from "@/components/reactbits/CountUp.jsx";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { usePortfolio } from "@/hooks/usePortfolio.js";
 
-const img11 = "/images/1.1.webp";
-const img12 = "/images/1.2.webp";
-const img21 = "/images/2.1.webp";
-const img22 = "/images/2.2.webp";
-const img23 = "/images/2.3.webp";
-const img24 = "/images/2.4.webp";
-const img26 = "/images/2.6.webp";
-const img27 = "/images/2.7.webp";
-const img28 = "/images/2.8.webp";
+const img11 = "/images/product/1.1.webp";
+const img12 = "/images/product/1.2.webp";
+const img21 = "/images/product/2.1.webp";
+const img22 = "/images/product/2.2.webp";
+const img23 = "/images/product/2.3.webp";
+const img24 = "/images/portfolio/2.4.webp";
+const img26 = "/images/portfolio/2.6.webp";
+const img27 = "/images/portfolio/2.7.webp";
+const img28 = "/images/portfolio/2.8.webp";
 
 const FALLBACK_SPOTLIGHTS = [
   {

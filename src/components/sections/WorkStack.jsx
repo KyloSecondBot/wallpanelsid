@@ -7,7 +7,7 @@ import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.js
 const STRENGTHS = [
   {
     id: 's1',
-    icon: '/images/strength-eco.webp',
+    icon: '/images/strength/strength-eco.webp',
     title: 'Environmental Protection',
     subtitle: 'Ramah Lingkungan',
     description: 'Diproduksi dengan proses ramah lingkungan untuk masa depan yang lebih hijau.',
@@ -17,7 +17,7 @@ const STRENGTHS = [
   },
   {
     id: 's2',
-    icon: '/images/strength-flame.webp',
+    icon: '/images/strength/strength-flame.webp',
     title: 'Flame-retardant',
     subtitle: 'Tahan Api',
     description: 'Memberikan perlindungan ekstra dan keamanan maksimal, tidak merambat jika terbakar.',
@@ -27,7 +27,7 @@ const STRENGTHS = [
   },
   {
     id: 's3',
-    icon: '/images/strength-water.webp',
+    icon: '/images/strength/strength-water.webp',
     title: 'Water Resistance',
     subtitle: 'Tahan Air',
     description: 'Tahan air. Tidak mudah mengembang dan berjamur.',
@@ -37,7 +37,7 @@ const STRENGTHS = [
   },
   {
     id: 's4',
-    icon: '/images/strength-flex.webp',
+    icon: '/images/strength/strength-flex.webp',
     title: 'Bendable / Flexible',
     subtitle: 'Fleksibel',
     description: 'Dapat dilengkungkan untuk membuat variasi yang lebih mewah atau elegan, tidak mengorbankan kekuatan struktural.',
@@ -47,7 +47,7 @@ const STRENGTHS = [
   },
   {
     id: 's5',
-    icon: '/images/strength-insect.webp',
+    icon: '/images/strength/strength-insect.webp',
     title: 'Insect Prevention',
     subtitle: 'Anti Serangga',
     description: 'Tahan rayap. Aman untuk interior jangka panjang.',
