@@ -24,13 +24,20 @@ import {
  * ─ Canvas 2d context: alpha:false for compositing optimization
  * ===================================================================== */
 
-const TOTAL_FRAMES = 192;
+const FRAMES_DESKTOP = 192;
+const FRAMES_MOBILE  = 96;   // every other frame: 001,003,005…191 — half the download
 const SCROLL_SCREENS_DESKTOP = 5;  // 500vh on desktop
-const SCROLL_SCREENS_MOBILE = 7;   // 700vh on mobile — slower, more deliberate scroll
+const SCROLL_SCREENS_MOBILE  = 7;  // 700vh on mobile — slower, more deliberate scroll
 
-/** Public path for frame i (0-indexed → 1-indexed, zero-padded to 3). */
-const frameSrc = (i) =>
-  `/images/Hero/frame-${String(i + 1).padStart(3, '0')}.webp`;
+/**
+ * Frame path for index i (0-based).
+ * Mobile: skips every other file → loads 001,003,005…191 (96 files, ~17MB).
+ * Desktop: loads all 192 files sequentially.
+ */
+const frameSrc = (i, mobile) => {
+  const num = mobile ? i * 2 + 1 : i + 1;
+  return `/images/Hero/frame-${String(num).padStart(3, '0')}.webp`;
+};
 
 /** Entrance animation easing — matches original Hero.jsx */
 const EASE = [0.22, 1, 0.36, 1];
@@ -58,12 +65,14 @@ export default function HeroFrameAnimation() {
   }, []);
 
   /* ── Refs ─────────────────────────────────────────────────── */
-  const canvasRef = useRef(null);
-  const sectionRef = useRef(null); // outer scroll runway
-  const ctxRef = useRef(null);     // cached canvas 2d context
-  const framesRef = useRef([]);    // preloaded Image objects
-  const lastIdxRef = useRef(-1);   // last drawn frame (skip redraw if same)
-  const rafRef = useRef(0);        // rAF handle for cleanup
+  const canvasRef    = useRef(null);
+  const sectionRef   = useRef(null); // outer scroll runway
+  const ctxRef       = useRef(null); // cached canvas 2d context
+  const framesRef    = useRef([]);   // preloaded Image objects
+  const lastIdxRef   = useRef(-1);   // last drawn frame (skip redraw if same)
+  const rafRef       = useRef(0);    // rAF handle for cleanup
+  const totalFramesRef = useRef(FRAMES_DESKTOP); // actual count loaded (mobile vs desktop)
+  const isMobileRef  = useRef(false);
 
   /* ── Scroll progress as Framer Motion value ────────────────
    * Updated imperatively in the rAF loop. Drives all text overlay
@@ -118,22 +127,29 @@ export default function HeroFrameAnimation() {
   }, []);
 
   /* ══════════════════════════════════════════════════════════════
-   * 1. PRELOAD — load all 192 frames into memory before interaction
+   * 1. PRELOAD — load frames before interaction.
+   * Mobile:  96 frames (every other file) = ~17MB, ~50% faster load.
+   * Desktop: 192 frames (all files)       = ~35MB, full quality.
    * ══════════════════════════════════════════════════════════════ */
   useEffect(() => {
-    let loaded = 0;
-    const imgs = new Array(TOTAL_FRAMES);
+    const mobile = window.innerWidth < 640;
+    isMobileRef.current = mobile;
+    const total = mobile ? FRAMES_MOBILE : FRAMES_DESKTOP;
+    totalFramesRef.current = total;
 
-    const tasks = Array.from({ length: TOTAL_FRAMES }, (_, i) =>
+    let loaded = 0;
+    const imgs = new Array(total);
+
+    const tasks = Array.from({ length: total }, (_, i) =>
       new Promise((resolve) => {
         const img = new Image();
         img.onload = img.onerror = () => {
           imgs[i] = img;
           loaded++;
-          setLoadPct(Math.floor((loaded / TOTAL_FRAMES) * 100));
+          setLoadPct(Math.floor((loaded / total) * 100));
           resolve();
         };
-        img.src = frameSrc(i);
+        img.src = frameSrc(i, mobile);
       })
     );
 
@@ -159,7 +175,9 @@ export default function HeroFrameAnimation() {
     ctxRef.current = cvs.getContext('2d', { alpha: false });
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      // Mobile: cap DPR at 1 — retina frames are overkill on a small screen
+      // and force 2-4× more GPU memory + decode time.
+      const dpr = isMobileRef.current ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       cvs.width = window.innerWidth * dpr;
       cvs.height = window.innerHeight * dpr;
       drawFrame(Math.max(0, lastIdxRef.current));
@@ -205,7 +223,8 @@ export default function HeroFrameAnimation() {
       scrollProg.set(t);
 
       // Map progress → frame index. Math.floor prevents flickering.
-      const idx = Math.min(TOTAL_FRAMES - 1, Math.floor(t * TOTAL_FRAMES));
+      const total = totalFramesRef.current;
+      const idx = Math.min(total - 1, Math.floor(t * total));
 
       // Only call drawImage when the frame actually changed
       if (idx !== lastIdxRef.current) {
