@@ -30,7 +30,7 @@ const PILLARS = [
       </svg>
     ),
     label: 'JHI Group',
-    desc: 'Sejak 2018',
+    desc: 'Sejak 2025',
   },
   {
     icon: (
@@ -76,7 +76,7 @@ export default function About() {
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Tentang Kami</p>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="max-w-xl text-3xl font-semibold text-white sm:text-4xl">
-              JHI Group - wallpanels.id
+              Wallpanels Indonesia
             </h2>
           </div>
         </motion.div>
@@ -102,15 +102,10 @@ export default function About() {
               className="flex flex-col justify-center gap-5 px-8 py-10 sm:px-10 lg:py-12"
             >
               <p className="text-base leading-relaxed text-white/80 sm:text-lg">
-                wallpanels.id didirikan pada 2018 dengan fokus utama untuk <span className="font-semibold text-white">interior residential dan komersil</span>.
+                Wallpanels Indonesia didirikan pada 2025 dengan fokus utama untuk <span className="font-semibold text-white">wall panel system &amp; cabinetry</span> interior residential dan komersil dengan pemasangan cepat &amp; perawatan mudah.
               </p>
               <p className="text-base leading-relaxed text-white/60">
-                Didukung team lebih dari <span className="font-semibold text-amber-300">100 tenaga profesional</span> dan
-                pabrik in-house, Melayani seluruh Indonesia. Berpengalaman untuk membuat interior yang berkualitas.
-              </p>
-              <p className="text-base leading-relaxed text-white/60">
-                Menyediakan jasa dari pengadaan bahan saja hingga jasa design dan build jika dibutuhkan.
-                Proyek kami tersebar di Jabodetabek hingga seluruh Indonesia.
+                Gudang Wallpanels Indonesia berlokasi di Tangerang, dan melayani seluruh Indonesia. Menyediakan jasa dari pengadaan bahan saja hingga jasa design dan build jika dibutuhkan.
               </p>
             </motion.div>
 

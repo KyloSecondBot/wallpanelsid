@@ -25,7 +25,7 @@ export default function CTA() {
           </div>
           <div className="flex flex-col gap-3">
             <a
-              href="https://wa.me/6287888879305?text=Hello%20wallpanels.id%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions."
+              href="https://wa.me/6287888879305?text=Hello%20Wallpanels%20Indonesia%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3 text-base font-semibold text-white shadow-[0_8px_28px_rgba(37,211,102,0.4)] transition hover:-translate-y-[2px]"

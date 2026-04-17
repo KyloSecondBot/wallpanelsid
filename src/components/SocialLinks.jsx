@@ -26,7 +26,7 @@ export default function SocialLinks({ className = '' }) {
         href="https://www.instagram.com/wallpanels.id"
         target="_blank"
         rel="noreferrer"
-        aria-label="wallpanels.id on Instagram"
+        aria-label="Wallpanels Indonesia on Instagram"
         className="group inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-white transition hover:-translate-y-[1px] hover:border-amber-400/50 hover:text-amber-300 hover:bg-amber-400/8"
       >
         <InstagramIcon />
@@ -35,7 +35,7 @@ export default function SocialLinks({ className = '' }) {
         href="https://www.tiktok.com/@wallpanels.id"
         target="_blank"
         rel="noreferrer"
-        aria-label="wallpanels.id on TikTok"
+        aria-label="Wallpanels Indonesia on TikTok"
         className="group inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-white transition hover:-translate-y-[1px] hover:border-amber-400/50 hover:text-amber-300 hover:bg-amber-400/8"
       >
         <TikTokIcon />

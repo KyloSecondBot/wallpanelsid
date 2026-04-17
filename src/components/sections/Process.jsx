@@ -19,6 +19,16 @@ const ICONS = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
     </svg>
   ),
+  blueprint: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 3h13.5c.414 0 .75.336.75.75v16.5a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75V3.75c0-.414.336-.75.75-.75Z" />
+      <path strokeLinecap="round" d="M7.5 7.5h9" />
+      <path strokeLinecap="round" d="M7.5 6.75v1.5M16.5 6.75v1.5" />
+      <path strokeLinecap="round" d="M7.5 10v7" />
+      <path strokeLinecap="round" d="M6.75 10h1.5M6.75 17h1.5" />
+      <rect x="10" y="10.5" width="5.5" height="5.5" strokeLinejoin="round" />
+    </svg>
+  ),
   wrench: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
       <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z" />
@@ -41,7 +51,7 @@ const STEPS = [
   { id: 'f1', num: '01', title_en: 'Survey Lokasi',          title_id: 'Site Survey',       description: 'Tim kami datang ke lokasi Bapak/Ibu buat ukur ruangan dan diskusi langsung, biar kami paham keseluruhan konsep yang diinginkan.',           icon_name: 'location' },
   { id: 'f2', num: '02', title_en: 'Penawaran Harga',        title_id: 'Price Quotation',   description: 'Kami buatkan rincian harga berdasarkan hasil survey. Bapak/Ibu bisa sesuaikan dengan budget dan kebutuhan.',                    icon_name: 'money' },
   { id: 'f3', num: '03', title_en: 'Desain',                 title_id: 'Design',            description: 'Proses desain langsung jalan, koordinasi lewat grup WhatsApp. Ada batasan revisi supaya prosesnya tetap efisien.',                          icon_name: 'design' },
-  { id: 'f4', num: '04', title_en: 'Kunjungan Pabrik',       title_id: 'Factory Visit',     description: 'Tahap ini opsional. Bapak/Ibu boleh mampir ke pabrik atau proyek yang lagi jalan buat lihat langsung kualitas kerja kami.',                 icon_name: 'factory' },
+  { id: 'f4', num: '04', title_en: 'Gambar Kerja',            title_id: 'Shop Drawing',      description: 'Gambar kerja detail disiapkan sebelum produksi dimulai, memastikan semua ukuran dan spesifikasi sesuai kebutuhan.',                       icon_name: 'blueprint' },
   { id: 'f5', num: '05', title_en: 'Proses Produksi',        title_id: 'Production',        description: 'Semua item kami produksi sesuai penawaran harga yang sudah disetujui. Kualitas tetap jadi prioritas utama.',                                icon_name: 'wrench' },
   { id: 'f6', num: '06', title_en: 'Instalasi',              title_id: 'Installation',      description: 'Barang dikirim dan instalasi dimulai di lokasi Bapak/Ibu. Setelah selesai, kami kasih warranty 12 bulan untuk semua pekerjaan.',            icon_name: 'home' },
 ];
@@ -113,20 +123,13 @@ export default function Process() {
                 {step.num}
               </span>
 
-              {/* Titles */}
-              <div className="relative z-10 space-y-0.5">
+              {/* Title — English only */}
+              <div className="relative z-10">
                 <h3 className="text-sm font-semibold text-white/85 transition-colors duration-300 group-hover:text-white">
-                  {step.title_en}
-                </h3>
-                <p className="text-[11px] text-white/30 transition-colors duration-300 group-hover:text-white/50">
                   {step.title_id}
-                </p>
+                </h3>
               </div>
 
-              {/* Description */}
-              <p className="relative z-10 text-xs leading-relaxed text-white/35 transition-colors duration-300 group-hover:text-white/60">
-                {step.description}
-              </p>
             </motion.div>
           ))}
         </div>

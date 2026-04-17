@@ -6,40 +6,34 @@ import AnimatedGradientText from '@/components/reactbits/AnimatedGradientText.js
 
 const SERIES = [
   {
-    id: 'marble',
-    title: 'Marble Series',
-    tagline: 'Luxury look. Kesan marmer premium.',
-    image: '/images/product/1.1.webp',
-  },
-  {
-    id: 'stone',
-    title: 'Stone Series',
-    tagline: 'Raw and bold. Nuansa batu alam.',
-    image: '/images/product/2.1.webp',
-  },
-  {
-    id: 'fabric',
-    title: 'Fabric Pattern',
-    tagline: 'Tampilan elegan.',
-    image: '/images/product/1.2.webp',
+    id: 'solid',
+    title: 'Solid Series',
+    image: '/images/product/Solid Series.webp',
   },
   {
     id: 'wood',
     title: 'Wood Series',
-    tagline: 'Nature look. Warm tropical vibe.',
-    image: '/images/product/2.2.webp',
+    image: '/images/product/Wood Series.webp',
   },
   {
-    id: 'metal',
-    title: 'Metal Series',
-    tagline: 'Industrial edge. Clean metallic finish.',
-    image: '/images/product/1.3.webp',
+    id: 'marble',
+    title: 'Marble Series',
+    image: '/images/product/Marble Series.webp',
   },
   {
-    id: 'profile',
-    title: 'Profile Panel',
-    tagline: 'Dimensi 3D. Dinding jadi hidup.',
-    image: '/images/product/2.3.webp',
+    id: 'linen',
+    title: 'Linen Series',
+    image: '/images/product/LINEN Series.webp',
+  },
+  {
+    id: 'stainless',
+    title: 'Stainless Series',
+    image: '/images/product/Stainless Steel Series.webp',
+  },
+  {
+    id: 'wpc',
+    title: 'WPC Series',
+    image: '/images/product/WPC.webp',
   },
 ];
 
@@ -246,11 +240,10 @@ export default function Product() {
                       {String(i + 1).padStart(2, '0')}
                     </div>
 
-                    <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 p-5 sm:p-6">
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
                       <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl leading-tight">
                         {item.title}
                       </h3>
-                      <p className="text-sm font-medium text-amber-300/80">{item.tagline}</p>
                     </div>
                   </div>
                 </div>

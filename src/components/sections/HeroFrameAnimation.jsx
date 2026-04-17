@@ -354,13 +354,13 @@ export default function HeroFrameAnimation() {
               className="inline-flex w-fit items-center gap-2.5 rounded-full border border-amber-400/20 bg-amber-400/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/80"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_rgba(173,158,143,0.8)]" />
-              Studio Desain Interior · Sejak 2018
+              Wall Panels System & Cabinetry · Sejak 2025
             </motion.div>
 
             {/* Headline — clip-reveal per line, identical to Hero.jsx */}
             <h1 className="flex flex-col gap-0 text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-[82px]">
               {HEADLINE.map(({ text, accent }, i) => (
-                <div key={i} className="overflow-hidden">
+                <div key={i} className="pb-[0.15em] -mb-[0.15em]" style={{ clipPath: 'inset(0 -0.3em -0.15em 0)' }}>
                   <motion.span
                     className="block"
                     initial={reduce ? false : { y: '105%' }}
@@ -390,9 +390,8 @@ export default function HeroFrameAnimation() {
               transition={{ duration: 0.75, ease: EASE, delay: 0.38 }}
               className="max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
             >
-              wallpanels.id menghadirkan solusi wall panel elegan untuk hunian,
-              ruang komersial, dan tempat kerja modern — dari pemilihan material
-              hingga pemasangan sempurna.
+              Pasang wall panel gaperlu ribet! Wallpanels Indonesia menghadirkan
+              solusi wall panel modern untuk residensial, kantor, hingga restoran!
             </motion.p>
 
             {/* CTAs — identical to Hero.jsx */}
@@ -444,17 +443,15 @@ export default function HeroFrameAnimation() {
           style={{ opacity: p2Op, y: p2Y }}
         >
           <div className="pointer-events-auto max-w-4xl">
-            <h2 className="flex flex-col gap-0 text-4xl font-bold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-              <span>Dari Pemilihan</span>
-              <span className="font-display italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200">
-                Material,
+            <h2 className="flex flex-col gap-0 text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+              <span>Hemat waktu & biaya</span>
+              <span>hingga{' '}
+                <span className="font-display italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200">
+                  70%
+                </span>
               </span>
-              <span>hingga Pemasangan</span>
-              <span>Sempurna.</span>
+              <span>dibandingkan wall panel HPL</span>
             </h2>
-            <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-              Material WPC tahan air, tahan rayap, tanpa perawatan khusus.
-            </p>
           </div>
         </motion.div>
 

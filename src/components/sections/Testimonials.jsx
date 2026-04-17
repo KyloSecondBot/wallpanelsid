@@ -7,13 +7,13 @@ const QUOTES = [
     id: 'fallback-1',
     name: 'Ibu Ratna',
     title: 'Pemilik Rumah, Jakarta Selatan',
-    quote: 'Ya ampun, hasilnya bagus banget - tiap detail bener-bener diperhatiin. Rumah rasanya kayak hotel bintang lima sekarang deh. Tim wallpanels.id juga ramah dan responsif banget!',
+    quote: 'Ya ampun, hasilnya bagus banget - tiap detail bener-bener diperhatiin. Rumah rasanya kayak hotel bintang lima sekarang deh. Tim Wallpanels Indonesia juga ramah dan responsif banget!',
   },
   {
     id: 'fallback-2',
     name: 'Bapak Kurniawan',
     title: 'Pemilik Gedung Kantor, Jakarta Barat',
-    quote: 'wallpanels.id bikin kantor kami jadi lebih hidup. Material, tekstur, sama finishing-nya oke semua - selesai tepat waktu dan hasilnya sesuai ekspektasi.',
+    quote: 'Wallpanels Indonesia bikin kantor kami jadi lebih hidup. Material, tekstur, sama finishing-nya oke semua - selesai tepat waktu dan hasilnya sesuai ekspektasi.',
   },
 ];
 

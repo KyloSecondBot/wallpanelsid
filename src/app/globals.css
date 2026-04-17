@@ -27,6 +27,10 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-padding-top: 120px;
+}
+
 body {
   font-family: var(--font-sans);
   background: #000000;

@@ -8,9 +8,9 @@ const STRENGTHS = [
   {
     id: 's1',
     icon: '/images/strength/strength-eco.webp',
-    title: 'Environmental Protection',
+    title: 'Recycled Materials',
     subtitle: 'Ramah Lingkungan',
-    description: 'Diproduksi dengan proses ramah lingkungan untuk masa depan yang lebih hijau.',
+    description: 'Menggunakan rangka dari bahan recycled plywood yang ramah lingkungan!',
     palette_from: '#0d0d0d',
     palette_via: '#111111',
     palette_to: '#000000',
@@ -18,7 +18,7 @@ const STRENGTHS = [
   {
     id: 's2',
     icon: '/images/strength/strength-flame.webp',
-    title: 'Flame-retardant',
+    title: 'Fire Retardant',
     subtitle: 'Tahan Api',
     description: 'Memberikan perlindungan ekstra dan keamanan maksimal, tidak merambat jika terbakar.',
     palette_from: '#0f0f0f',
@@ -28,9 +28,9 @@ const STRENGTHS = [
   {
     id: 's3',
     icon: '/images/strength/strength-water.webp',
-    title: 'Water Resistance',
+    title: 'Water Resistant',
     subtitle: 'Tahan Air',
-    description: 'Tahan air. Tidak mudah mengembang dan berjamur.',
+    description: 'Tidak mudah mengembang dan berjamur.',
     palette_from: '#0c0c0c',
     palette_via: '#101010',
     palette_to: '#000000',
@@ -40,7 +40,7 @@ const STRENGTHS = [
     icon: '/images/strength/strength-flex.webp',
     title: 'Bendable / Flexible',
     subtitle: 'Fleksibel',
-    description: 'Dapat dilengkungkan untuk membuat variasi yang lebih mewah atau elegan, tidak mengorbankan kekuatan struktural.',
+    description: 'Dapat dilengkungkan untuk membuat variasi interior yang ga boring!',
     palette_from: '#0e0e0e',
     palette_via: '#121212',
     palette_to: '#090909',
@@ -48,8 +48,8 @@ const STRENGTHS = [
   {
     id: 's5',
     icon: '/images/strength/strength-insect.webp',
-    title: 'Insect Prevention',
-    subtitle: 'Anti Serangga',
+    title: 'Termite Resistant',
+    subtitle: 'Anti Rayap',
     description: 'Tahan rayap. Aman untuk interior jangka panjang.',
     palette_from: '#0d0d0d',
     palette_via: '#101010',
@@ -61,7 +61,7 @@ export default function WorkStack() {
   const stackKey = STRENGTHS.map((s) => s.id).join('-');
 
   return (
-    <section className="relative">
+    <section id="mengapa-kami" className="relative pb-24">
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

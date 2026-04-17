@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-amber-400/15 bg-black/90 px-6 py-10 text-sm text-white/60">
       <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 sm:flex-row sm:items-center">
         <div>
-          <p className="text-lg font-semibold text-white">wallpanels.id</p>
+          <p className="text-lg font-semibold text-white">Wallpanels Indonesia</p>
           <p className="text-white/40">Interior Cepat Beres !</p>
           <SocialLinks className="mt-3" />
         </div>

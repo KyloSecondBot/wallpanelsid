@@ -5,7 +5,7 @@ const CONTACT_INFO = {
   address:        'Jl. Raya Serpong, Kec. Serpong Utara, Kota Tangerang Selatan, Banten 15320',
   email:          'wallpanelsindonesia@gmail.com',
   phone:          '087888879305',
-  whatsapp_link:  'https://wa.me/6287888879305?text=Hello%20wallpanels.id%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions.',
+  whatsapp_link:  'https://wa.me/6287888879305?text=Hello%20Wallpanels%20Indonesia%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions.',
   business_hours: 'Mon – Sat · 09.00 – 17.00 WIB',
 };
 
