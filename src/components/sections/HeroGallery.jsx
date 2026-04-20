@@ -58,7 +58,7 @@ export default function HeroGallery() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => setRevealed(true), 150);
+    const t = setTimeout(() => setRevealed(true), 50);
     return () => clearTimeout(t);
   }, []);
 
@@ -156,7 +156,7 @@ export default function HeroGallery() {
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 18 }}
               animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 0.5, ease: EASE }}
               className="inline-flex w-fit items-center gap-2.5 rounded-full border border-amber-400/20 bg-amber-400/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/80"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_rgba(173,158,143,0.8)]" />
@@ -178,7 +178,7 @@ export default function HeroGallery() {
                     className="block"
                     initial={reduce ? false : { y: '105%' }}
                     animate={revealed ? { y: '0%' } : false}
-                    transition={{ duration: 0.85, ease: EASE, delay: idx * 0.11 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: idx * 0.08 }}
                   >
                     {accent ? (
                       <span
@@ -196,7 +196,7 @@ export default function HeroGallery() {
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 22 }}
               animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.75, ease: EASE, delay: 0.38 }}
+              transition={{ duration: 0.55, ease: EASE, delay: 0.26 }}
               className="max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
             >
               Pasang wall panel gaperlu ribet! Wallpanels Indonesia menghadirkan
@@ -206,7 +206,7 @@ export default function HeroGallery() {
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 22 }}
               animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.75, ease: EASE, delay: 0.48 }}
+              transition={{ duration: 0.55, ease: EASE, delay: 0.34 }}
               className="flex flex-wrap items-center gap-4"
             >
               <a
