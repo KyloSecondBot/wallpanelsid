@@ -126,9 +126,9 @@ export default function Process() {
               {/* Title */}
               <div className="relative z-10">
                 <h3 className="text-sm font-semibold text-white/85 transition-colors duration-300 group-hover:text-white">
-                  {step.title_en}
+                  {step.title_id}
                 </h3>
-                <p className="mt-0.5 text-xs text-white/40">{step.title_id}</p>
+                <p className="mt-0.5 text-xs text-white/40">{step.title_en}</p>
               </div>
 
             </motion.div>
