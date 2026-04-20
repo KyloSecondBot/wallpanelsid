@@ -9,13 +9,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const PHOTOS = [
-  { src: '/images/product/Sample%20Photo/LV%203.webp',           kb: 'kb-tl' },
-  { src: '/images/product/Sample%20Photo/KAMAR.MASTER%202.webp', kb: 'kb-tr' },
-  { src: '/images/product/Sample%20Photo/KMR.UTM%203.webp',      kb: 'kb-bl' },
-  { src: '/images/product/Sample%20Photo/LV%205.webp',           kb: 'kb-br' },
-  { src: '/images/product/Sample%20Photo/LV%204.webp',           kb: 'kb-tl' },
-  { src: '/images/product/Sample%20Photo/KMR.TAMU%201.webp',     kb: 'kb-tr' },
-  { src: '/images/product/Sample%20Photo/KAMAR.ANAK%201.webp',   kb: 'kb-bl' },
+  { src: '/images/product/Hero%20Portfolio/LV%203.webp',           kb: 'kb-tl' },
+  { src: '/images/product/Hero%20Portfolio/KAMAR.MASTER%202.webp', kb: 'kb-tr' },
+  { src: '/images/product/Hero%20Portfolio/KMR.UTM%203.webp',      kb: 'kb-bl' },
+  { src: '/images/product/Hero%20Portfolio/LV%205.webp',           kb: 'kb-br' },
+  { src: '/images/product/Hero%20Portfolio/LV%204.webp',           kb: 'kb-tl' },
+  { src: '/images/product/Hero%20Portfolio/KMR.TAMU%201.webp',     kb: 'kb-tr' },
+  { src: '/images/product/Hero%20Portfolio/KAMAR.ANAK%201.webp',   kb: 'kb-bl' },
 ];
 
 const HEADLINE = [

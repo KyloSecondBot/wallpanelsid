@@ -8,32 +8,32 @@ const SERIES = [
   {
     id: 'solid',
     title: 'Solid Series',
-    image: '/images/product/Solid Series.webp',
+    image: '/images/product/Product Series/Solid Series.webp',
   },
   {
     id: 'wood',
     title: 'Wood Series',
-    image: '/images/product/Wood Series.webp',
+    image: '/images/product/Product Series/Wood Series.webp',
   },
   {
     id: 'marble',
     title: 'Marble Series',
-    image: '/images/product/Marble Series.webp',
+    image: '/images/product/Product Series/Marble Series.webp',
   },
   {
     id: 'linen',
     title: 'Linen Series',
-    image: '/images/product/LINEN Series.webp',
+    image: '/images/product/Product Series/LINEN Series.webp',
   },
   {
     id: 'stainless',
     title: 'Stainless Series',
-    image: '/images/product/Stainless Steel Series.webp',
+    image: '/images/product/Product Series/Stainless Steel Series.webp',
   },
   {
     id: 'wpc',
     title: 'WPC Series',
-    image: '/images/product/WPC.webp',
+    image: '/images/product/Product Series/WPC.webp',
   },
 ];
 
