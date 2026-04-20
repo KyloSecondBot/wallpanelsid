@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -148,20 +149,25 @@ export default function HeroGallery() {
       style={{ height: isMobile && ready ? '520vh' : '520vh' }}
     >
       <div className="sticky top-0 h-[100dvh] w-full">
-        {/* Photo layers */}
+        {/* Photo layers — next/image resizes per device (mobile ~100 KB vs 1.5 MB raw) */}
         {visiblePhotos.map((photo, i) => (
           <div
             key={i}
             ref={el => { photoRefs.current[i] = el; }}
             className={`absolute inset-0 overflow-hidden${i > 0 ? ' opacity-0' : ''}`}
           >
-            <img
+            <Image
               src={photo.src}
               alt=""
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className="object-cover"
               draggable={false}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              className="h-full w-full object-cover"
-              style={{ animation: reduce ? 'none' : `${photo.kb} 14s ease-in-out infinite alternate` }}
+              style={{
+                // Only animate the visible photo — hidden layers cost GPU even at opacity:0
+                animation: (reduce || i > 0) ? 'none' : `${photo.kb} 16s ease-in-out infinite alternate`,
+              }}
             />
           </div>
         ))}

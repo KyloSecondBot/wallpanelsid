@@ -96,22 +96,22 @@ body {
   animation: gradient-shift 8s ease-in-out infinite;
 }
 
-/* Ken Burns animations — HeroGallery photo layers */
+/* Ken Burns animations — HeroGallery photo layers (reduced scale = less GPU work) */
 @keyframes kb-tl {
-  from { transform: scale(1.05) translate(1.5%, 0.5%); }
-  to   { transform: scale(1.15) translate(-1.5%, -0.5%); }
+  from { transform: scale(1.03) translate(1%, 0.5%); }
+  to   { transform: scale(1.09) translate(-1%, -0.5%); }
 }
 @keyframes kb-tr {
-  from { transform: scale(1.05) translate(-1.5%, 0.5%); }
-  to   { transform: scale(1.15) translate(1.5%, -0.5%); }
+  from { transform: scale(1.03) translate(-1%, 0.5%); }
+  to   { transform: scale(1.09) translate(1%, -0.5%); }
 }
 @keyframes kb-bl {
-  from { transform: scale(1.1) translate(0.5%, -0.5%); }
-  to   { transform: scale(1.0) translate(-0.5%, 0.5%); }
+  from { transform: scale(1.07) translate(0.5%, -0.5%); }
+  to   { transform: scale(1.02) translate(-0.5%, 0.5%); }
 }
 @keyframes kb-br {
-  from { transform: scale(1.0) translate(-0.5%, -0.5%); }
-  to   { transform: scale(1.1) translate(0.5%, 0.5%); }
+  from { transform: scale(1.02) translate(-0.5%, -0.5%); }
+  to   { transform: scale(1.07) translate(0.5%, 0.5%); }
 }
 
 /* Hide scrollbar — used by snap carousels */
