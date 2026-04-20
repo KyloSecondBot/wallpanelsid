@@ -116,15 +116,16 @@ export default function HeroGallery() {
 
     if (isMobile) {
       tl
-        .to(si,   { opacity: 0,         duration: 0.10 }, 0)
-        .to(tp1,  { opacity: 0, y: -24, duration: 0.25 }, 0.40)
-        .to(p[0], { opacity: 0,         duration: 0.28 }, 0.65)
-        .to(p[1], { opacity: 1,         duration: 0.28 }, 0.65)
-        .to(tp2,  { opacity: 1, y: 0,   duration: 0.25 }, 0.90)
-        .to(tp2,  { opacity: 0, y: -24, duration: 0.25 }, 1.38)
-        .to(p[1], { opacity: 0,         duration: 0.28 }, 1.50)
-        .to(p[2], { opacity: 1,         duration: 0.28 }, 1.50)
-        .to(tp3,  { opacity: 1,         duration: 0.25 }, 1.72);
+        .to(si,   { opacity: 0,         duration: 0.08 }, 0)
+        .to(tp1,  { opacity: 0, y: -24, duration: 0.22 }, 0.38)
+        .to(p[0], { opacity: 0,         duration: 0.24 }, 0.60)
+        .to(p[1], { opacity: 1,         duration: 0.24 }, 0.60)
+        .to(tp2,  { opacity: 1, y: 0,   duration: 0.22 }, 0.84)
+        .to(tp2,  { opacity: 0, y: -24, duration: 0.22 }, 1.34)
+        .to(p[1], { opacity: 0,         duration: 0.24 }, 1.56)
+        .to(p[2], { opacity: 1,         duration: 0.24 }, 1.56)
+        .to(tp3,  { opacity: 1,         duration: 0.22 }, 1.80)
+        .to({},   {                      duration: 0.01 }, 2.39);
     } else {
       tl
         .to(si,   { opacity: 0,         duration: 0.12 }, 0)
@@ -137,7 +138,8 @@ export default function HeroGallery() {
         .to(p[2], { opacity: 1,         duration: 0.32 }, 1.82)
         .to(tp3,  { opacity: 1,         duration: 0.28 }, 2.08)
         .to(p[2], { opacity: 0,         duration: 0.32 }, 2.62)
-        .to(p[3], { opacity: 1,         duration: 0.32 }, 2.62);
+        .to(p[3], { opacity: 1,         duration: 0.32 }, 2.62)
+        .to({},   {                      duration: 0.01 }, 3.19);
     }
   }, { dependencies: [ready, isMobile, shuffled] });
 
@@ -146,7 +148,7 @@ export default function HeroGallery() {
       ref={sectionRef}
       id="top"
       className="relative bg-black"
-      style={{ height: isMobile && ready ? '520vh' : '640vh' }}
+      style={{ height: isMobile && ready ? '640vh' : '720vh' }}
     >
       <div className="sticky top-0 h-[100dvh] w-full">
         {/* Photo layers — next/image resizes per device (mobile ~100 KB vs 1.5 MB raw) */}
