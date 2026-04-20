@@ -146,7 +146,7 @@ export default function HeroGallery() {
       ref={sectionRef}
       id="top"
       className="relative bg-black"
-      style={{ height: isMobile && ready ? '520vh' : '520vh' }}
+      style={{ height: isMobile && ready ? '520vh' : '640vh' }}
     >
       <div className="sticky top-0 h-[100dvh] w-full">
         {/* Photo layers — next/image resizes per device (mobile ~100 KB vs 1.5 MB raw) */}
@@ -165,8 +165,13 @@ export default function HeroGallery() {
               className="object-cover"
               draggable={false}
               style={{
-                // Only animate the visible photo — hidden layers cost GPU even at opacity:0
-                animation: (reduce || i > 0) ? 'none' : `${photo.kb} 16s ease-in-out infinite alternate`,
+                // Mobile: only animate the visible photo to save GPU budget
+                // Desktop/iPad: all photos animate so crossfades look alive, not static
+                animation: reduce
+                  ? 'none'
+                  : (isMobile && ready && i > 0)
+                    ? 'none'
+                    : `${photo.kb} 16s ease-in-out infinite alternate`,
               }}
             />
           </div>
