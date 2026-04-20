@@ -35,7 +35,6 @@ export default function HeroGallery() {
   const reduce = useReducedMotion();
   const [ready, setReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  // Shuffled once on client mount so every visit shows a random photo order
   const [shuffled, setShuffled] = useState(PHOTOS);
 
   const sectionRef = useRef(null);
@@ -44,6 +43,12 @@ export default function HeroGallery() {
   const p2Ref = useRef(null);
   const p3Ref = useRef(null);
   const siRef = useRef(null);
+
+  // Phase 1 entrance refs
+  const badgeRef = useRef(null);
+  const wordRefs = useRef([]);
+  const paraRef  = useRef(null);
+  const btnsRef  = useRef(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
@@ -54,24 +59,49 @@ export default function HeroGallery() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Mobile shows 3 of the 7 shuffled photos; desktop shows 4
+  // ── Phase 1 entrance animation ───────────────────────────────────────────
+  // useGSAP runs in useLayoutEffect — fires before the browser paints the
+  // hydrated content, so gsap.set() establishes the hidden initial state
+  // without a visible flash, then the timeline plays in.
+  useGSAP(() => {
+    const badge = badgeRef.current;
+    const words = wordRefs.current.filter(Boolean);
+    const para  = paraRef.current;
+    const btns  = btnsRef.current;
+    if (!badge || !words.length || !para || !btns) return;
+
+    if (reduce) {
+      // Prefers reduced motion — make everything visible instantly
+      gsap.set([badge, para, btns], { opacity: 1, y: 0 });
+      gsap.set(words, { y: '0%' });
+      return;
+    }
+
+    // Reinforce the inline-style initial states so GSAP owns the properties
+    gsap.set([badge, para, btns], { y: 20 }); // opacity:0 already on element
+    gsap.set(words, { y: '108%' });            // already on element, GSAP takes over
+
+    gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .to(badge, { opacity: 1, y: 0, duration: 0.5  }, 0.05)
+      .to(words, { y: '0%',    duration: 0.55, stagger: 0.07 }, 0.08)
+      .to(para,  { opacity: 1, y: 0, duration: 0.45 }, 0.26)
+      .to(btns,  { opacity: 1, y: 0, duration: 0.45 }, 0.34);
+  }, { dependencies: [] });
+
+  // ── Scroll trigger (phases 1→2→3) ───────────────────────────────────────
   const photoCount = isMobile && ready ? 3 : 4;
   const visiblePhotos = shuffled.slice(0, photoCount);
 
-  // GSAP ScrollTrigger drives both mobile and desktop.
-  // Mobile: 300 vh section (200 vh scrollable) → 2-unit timeline.
-  // Desktop: 400 vh section (300 vh scrollable) → 3-unit timeline.
   useGSAP(() => {
     if (!ready || !sectionRef.current) return;
 
-    const p = photoRefs.current.slice(0, photoCount);
+    const p  = photoRefs.current.slice(0, photoCount);
     const tp1 = p1Ref.current;
     const tp2 = p2Ref.current;
     const tp3 = p3Ref.current;
-    const si = siRef.current;
+    const si  = siRef.current;
     if (p.some(el => !el) || !tp1 || !tp2 || !tp3) return;
 
-    // GSAP owns the y-offset for phase 2 entrance (avoids Tailwind transform conflict)
     gsap.set(tp2, { y: 24 });
 
     const tl = gsap.timeline({
@@ -117,13 +147,8 @@ export default function HeroGallery() {
       className="relative bg-black"
       style={{ height: isMobile && ready ? '520vh' : '520vh' }}
     >
-      {/*
-       * No overflow-hidden here — each photo div clips its own Ken Burns
-       * animation, so removing it from the parent lets italic letterforms
-       * render without being clipped at the edge.
-       */}
       <div className="sticky top-0 h-[100dvh] w-full">
-        {/* Photo layers — Ken Burns via CSS animation on <img> */}
+        {/* Photo layers */}
         {visiblePhotos.map((photo, i) => (
           <div
             key={i}
@@ -142,11 +167,14 @@ export default function HeroGallery() {
         ))}
         <Overlays />
 
-        {/* ── Phase 1 — left-aligned hero intro ──────────────────────── */}
+        {/* ── Phase 1 ── */}
         <div ref={p1Ref} className="pointer-events-none absolute inset-0 z-10 flex items-center">
           <div className="pointer-events-auto mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 sm:px-8 lg:px-12">
+
+            {/* Badge — opacity:0 in SSR HTML prevents first-paint flash */}
             <div
-              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both' }}
+              ref={badgeRef}
+              style={{ opacity: 0 }}
               className="inline-flex w-fit items-center gap-2.5 rounded-full border border-amber-400/20 bg-amber-400/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/80"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_rgba(173,158,143,0.8)]" />
@@ -158,13 +186,13 @@ export default function HeroGallery() {
                 <div
                   key={idx}
                   className="-mb-[0.15em] pb-[0.15em]"
-                  style={{
-                    clipPath: 'inset(-0.08em -0.55em -0.22em -0.18em)',
-                  }}
+                  style={{ clipPath: 'inset(-0.08em -0.55em -0.22em -0.18em)' }}
                 >
+                  {/* transform in SSR HTML keeps words behind clipPath before GSAP loads */}
                   <span
+                    ref={el => { wordRefs.current[idx] = el; }}
                     className="block"
-                    style={{ animation: reduce ? 'none' : `hero-slide-up 0.55s cubic-bezier(0.22,1,0.36,1) ${idx * 0.07}s both` }}
+                    style={{ transform: 'translateY(108%)' }}
                   >
                     {accent ? (
                       <span
@@ -180,7 +208,8 @@ export default function HeroGallery() {
             </h1>
 
             <p
-              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.22s both' }}
+              ref={paraRef}
+              style={{ opacity: 0 }}
               className="max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
             >
               Pasang wall panel gaperlu ribet! Wallpanels Indonesia menghadirkan
@@ -188,7 +217,8 @@ export default function HeroGallery() {
             </p>
 
             <div
-              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both' }}
+              ref={btnsRef}
+              style={{ opacity: 0 }}
               className="flex flex-wrap items-center gap-4"
             >
               <a
@@ -213,8 +243,7 @@ export default function HeroGallery() {
           </div>
         </div>
 
-        {/* ── Phase 2 — "Hemat 70%" ───────────────────────────────────── */}
-        {/* px-10 sm:px-16 gives italic text breathing room at the edges   */}
+        {/* ── Phase 2 — "Hemat 70%" ── */}
         <div
           ref={p2Ref}
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-10 text-center opacity-0 sm:px-16"
@@ -236,17 +265,12 @@ export default function HeroGallery() {
           </div>
         </div>
 
-        {/* ── Phase 3 — "Interior Cepat Beres !" ─────────────────────── */}
+        {/* ── Phase 3 — "Interior Cepat Beres !" ── */}
         <div
           ref={p3Ref}
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-10 text-center opacity-0 sm:px-16"
         >
           <div className="pointer-events-auto w-full max-w-4xl">
-            {/*
-             * On mobile (<sm) the text is split across two lines to prevent
-             * italic letterforms from reaching the overflow boundary.
-             * The <br> is hidden on sm+ so desktop stays on one line.
-             */}
             <h2 className="text-[2.5rem] font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-7xl xl:text-[82px]">
               Interior{' '}
               <br className="sm:hidden" />
