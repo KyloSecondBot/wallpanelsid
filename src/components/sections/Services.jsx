@@ -45,7 +45,7 @@ export default function Services() {
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Layanan Kami</p>
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">Semua yang dibutuhkan untuk mewujudkan interior impian.</h2>
           <p className="max-w-3xl text-white/75">
-            Tim wall-panels.id bisa melayani semua, dari penjualan wall panel secara retail,
+            Tim Wallpanels Indonesia, dari penjualan wall panel secara retail,
             desain 3D, produksi, sampai pemasangan langsung di lokasi kamu.
           </p>
         </div>

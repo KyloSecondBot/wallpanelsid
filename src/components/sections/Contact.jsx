@@ -62,8 +62,7 @@ export default function Contact() {
 
         {/* ── Header ── */}
         <motion.div {...fadeUp(0)}>
-          <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Hubungi Kami</p>
-          <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Mari mulai diskusi.
             </h2>

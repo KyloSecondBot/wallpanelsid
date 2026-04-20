@@ -123,7 +123,7 @@ export default function HeroGallery() {
       ref={sectionRef}
       id="top"
       className="relative bg-black"
-      style={{ height: isMobile && ready ? '300vh' : '400vh' }}
+      style={{ height: isMobile && ready ? '400vh' : '520vh' }}
     >
       {/*
        * No overflow-hidden here — each photo div clips its own Ken Burns
@@ -210,7 +210,9 @@ export default function HeroGallery() {
               className="flex flex-wrap items-center gap-4"
             >
               <a
-                href="#contact"
+                href="https://wa.me/6287888879305?text=Hello%20Wallpanels%20Indonesia%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions."
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-300 to-amber-400 px-7 py-3.5 text-sm font-bold text-black shadow-[0_0_50px_rgba(173,158,143,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_80px_rgba(173,158,143,0.65)]"
               >
                 Hubungi Kami

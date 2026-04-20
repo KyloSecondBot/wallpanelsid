@@ -80,7 +80,9 @@ export default function NavBar() {
           <div className="hidden items-center gap-2 sm:flex sm:gap-3">
             <SocialLinks />
             <a
-              href="#contact"
+              href="https://wa.me/6287888879305?text=Hello%20Wallpanels%20Indonesia%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions."
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-300 to-amber-400 px-4 py-2 text-black text-sm font-semibold shadow-[0_8px_32px_rgba(173,158,143,0.4)] transition hover:-translate-y-[1px] hover:shadow-[0_8px_40px_rgba(173,158,143,0.55)] sm:text-base"
             >
               Hubungi Kami
@@ -145,7 +147,9 @@ export default function NavBar() {
 
               <div className="mt-4 border-t border-white/10 pt-4 space-y-3">
                 <a
-                  href="#contact"
+                  href="https://wa.me/6287888879305?text=Hello%20Wallpanels%20Indonesia%2C%20I%27m%20interested%20in%20your%20wall%20panel%20solutions."
+                  target="_blank"
+                  rel="noreferrer"
                   onClick={closeMenu}
                   className="flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-amber-300 to-amber-400 py-3 text-slate-950 text-sm font-semibold shadow-[0_6px_24px_rgba(173,158,143,0.25)] transition hover:-translate-y-[1px]"
                 >
