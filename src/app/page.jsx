@@ -4,7 +4,7 @@ import AuroraBackground from "@/components/reactbits/AuroraBackground";
 import BlobCursor from "@/components/reactbits/BlobCursor";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import HeroFrameAnimation from "@/components/sections/HeroFrameAnimation";
+import HeroGallery from "@/components/sections/HeroGallery";
 import About from "@/components/sections/About";
 import Product from "@/components/sections/Product";
 import WorkStack from "@/components/sections/WorkStack";
@@ -22,7 +22,7 @@ export default function HomePage() {
       <div className="relative z-10">
         <NavBar />
         <main className="space-y-20 pb-12 pt-4 sm:space-y-24">
-          <HeroFrameAnimation />
+          <HeroGallery />
           <About />
           <Product />
           <WorkStack />
