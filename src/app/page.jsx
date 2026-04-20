@@ -2,6 +2,7 @@
 
 import AuroraBackground from "@/components/reactbits/AuroraBackground";
 import BlobCursor from "@/components/reactbits/BlobCursor";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import HeroGallery from "@/components/sections/HeroGallery";
@@ -15,6 +16,7 @@ import Contact from "@/components/sections/Contact";
 
 export default function HomePage() {
   return (
+    <SmoothScrollProvider>
     <div className="relative min-h-screen overflow-clip bg-black text-white">
       <AuroraBackground />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(173,158,143,0.08),transparent_35%)]" />
@@ -35,5 +37,6 @@ export default function HomePage() {
       </div>
       <BlobCursor />
     </div>
+    </SmoothScrollProvider>
   );
 }
