@@ -96,6 +96,16 @@ body {
   animation: gradient-shift 8s ease-in-out infinite;
 }
 
+/* Hero Phase 1 entrance — CSS-native so they start at first paint, no JS hydration wait */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-slide-up {
+  from { transform: translateY(108%); }
+  to   { transform: translateY(0%); }
+}
+
 /* Ken Burns animations — HeroGallery photo layers */
 @keyframes kb-tl {
   from { transform: scale(1.05) translate(1.5%, 0.5%); }

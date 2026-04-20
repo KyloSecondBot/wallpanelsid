@@ -8,8 +8,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const EASE = [0.22, 1, 0.36, 1];
-
 const PHOTOS = [
   { src: '/images/product/Sample%20Photo/LV%203.webp',           kb: 'kb-tl' },
   { src: '/images/product/Sample%20Photo/KAMAR.MASTER%202.webp', kb: 'kb-tr' },
@@ -37,7 +35,6 @@ export default function HeroGallery() {
   const reduce = useReducedMotion();
   const [ready, setReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [revealed, setRevealed] = useState(false);
   // Shuffled once on client mount so every visit shows a random photo order
   const [shuffled, setShuffled] = useState(PHOTOS);
 
@@ -55,11 +52,6 @@ export default function HeroGallery() {
     setReady(true);
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
-  }, []);
-
-  useEffect(() => {
-    const t = setTimeout(() => setRevealed(true), 50);
-    return () => clearTimeout(t);
   }, []);
 
   // Mobile shows 3 of the 7 shuffled photos; desktop shows 4
@@ -153,15 +145,13 @@ export default function HeroGallery() {
         {/* ── Phase 1 — left-aligned hero intro ──────────────────────── */}
         <div ref={p1Ref} className="pointer-events-none absolute inset-0 z-10 flex items-center">
           <div className="pointer-events-auto mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 sm:px-8 lg:px-12">
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 18 }}
-              animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.5, ease: EASE }}
+            <div
+              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both' }}
               className="inline-flex w-fit items-center gap-2.5 rounded-full border border-amber-400/20 bg-amber-400/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/80"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_rgba(173,158,143,0.8)]" />
               Wall Panels System & Cabinetry · Sejak 2025
-            </motion.div>
+            </div>
 
             <h1 className="flex flex-col gap-0 text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-[82px]">
               {HEADLINE.map(({ text, accent }, idx) => (
@@ -169,16 +159,12 @@ export default function HeroGallery() {
                   key={idx}
                   className="-mb-[0.15em] pb-[0.15em]"
                   style={{
-                    // Extended on all sides so italic letterforms (top ascenders,
-                    // right-leaning strokes on N/W etc.) are never clipped
                     clipPath: 'inset(-0.08em -0.55em -0.22em -0.18em)',
                   }}
                 >
-                  <motion.span
+                  <span
                     className="block"
-                    initial={reduce ? false : { y: '105%' }}
-                    animate={revealed ? { y: '0%' } : false}
-                    transition={{ duration: 0.6, ease: EASE, delay: idx * 0.08 }}
+                    style={{ animation: reduce ? 'none' : `hero-slide-up 0.55s cubic-bezier(0.22,1,0.36,1) ${idx * 0.07}s both` }}
                   >
                     {accent ? (
                       <span
@@ -188,25 +174,21 @@ export default function HeroGallery() {
                         {text}
                       </span>
                     ) : text}
-                  </motion.span>
+                  </span>
                 </div>
               ))}
             </h1>
 
-            <motion.p
-              initial={reduce ? false : { opacity: 0, y: 22 }}
-              animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.55, ease: EASE, delay: 0.26 }}
+            <p
+              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.22s both' }}
               className="max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
             >
               Pasang wall panel gaperlu ribet! Wallpanels Indonesia menghadirkan
               solusi wall panel modern untuk residensial, kantor, hingga restoran!
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 22 }}
-              animate={revealed ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.55, ease: EASE, delay: 0.34 }}
+            <div
+              style={{ animation: reduce ? 'none' : 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both' }}
               className="flex flex-wrap items-center gap-4"
             >
               <a
@@ -227,7 +209,7 @@ export default function HeroGallery() {
                 Lihat Koleksi
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
-            </motion.div>
+            </div>
           </div>
         </div>
 
