@@ -123,7 +123,7 @@ export default function HeroGallery() {
       ref={sectionRef}
       id="top"
       className="relative bg-black"
-      style={{ height: isMobile && ready ? '400vh' : '520vh' }}
+      style={{ height: isMobile && ready ? '520vh' : '520vh' }}
     >
       {/*
        * No overflow-hidden here — each photo div clips its own Ken Burns
