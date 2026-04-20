@@ -123,11 +123,12 @@ export default function Process() {
                 {step.num}
               </span>
 
-              {/* Title — English only */}
+              {/* Title */}
               <div className="relative z-10">
                 <h3 className="text-sm font-semibold text-white/85 transition-colors duration-300 group-hover:text-white">
-                  {step.title_id}
+                  {step.title_en}
                 </h3>
+                <p className="mt-0.5 text-xs text-white/40">{step.title_id}</p>
               </div>
 
             </motion.div>
