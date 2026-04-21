@@ -61,7 +61,7 @@ export default function WorkStack() {
   const stackKey = STRENGTHS.map((s) => s.id).join('-');
 
   return (
-    <section id="mengapa-kami" className="relative pb-24">
+    <section id="mengapa-kami" className="relative">
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

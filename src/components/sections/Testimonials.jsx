@@ -22,7 +22,7 @@ export default function Testimonials() {
 
   return (
     <section className="px-6">
-      <div className="mx-auto max-w-6xl space-y-6">
+      <div className="mx-auto max-w-6xl space-y-10">
         <div className="flex flex-col gap-2">
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Testimoni</p>
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">Kata mereka tentang kami.</h2>

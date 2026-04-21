@@ -58,7 +58,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="px-6">
-      <div className="mx-auto max-w-6xl space-y-8">
+      <div className="mx-auto max-w-6xl space-y-10">
 
         {/* ── Header ── */}
         <motion.div {...fadeUp(0)}>

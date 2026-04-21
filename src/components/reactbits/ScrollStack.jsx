@@ -71,12 +71,30 @@ const ScrollStack = ({
 
   // Called once on mount + on resize - batch all layout reads up front
   const cacheOffsets = useCallback(() => {
+    // Compute exact bottom padding needed so the last card's pin animation
+    // completes at a positive translateY on any screen size — no hardcoded
+    // breakpoints, adapts to every device at runtime.
+    if (useWindowScroll) {
+      const inner = scrollerRef.current?.querySelector('.scroll-stack-inner');
+      if (inner && cardsRef.current.length) {
+        const { containerHeight } = getScrollData();
+        const stackPositionPx = parsePercentage(stackPosition, containerHeight);
+        const lastCard = cardsRef.current[cardsRef.current.length - 1];
+        const lastCardHeight = lastCard ? lastCard.offsetHeight : 0;
+        const lastIdx = cardsRef.current.length - 1;
+        const minPb = Math.max(
+          0,
+          containerHeight / 2 - stackPositionPx - itemStackDistance * lastIdx - lastCardHeight
+        ) + 24;
+        inner.style.paddingBottom = `${minPb}px`;
+      }
+    }
     cardOffsetsRef.current = cardsRef.current.map(card => card ? getDocumentOffset(card) : 0);
     const endEl = useWindowScroll
       ? document.querySelector('.scroll-stack-end')
       : scrollerRef.current?.querySelector('.scroll-stack-end');
     endOffsetRef.current = endEl ? getDocumentOffset(endEl) : 0;
-  }, [getDocumentOffset, useWindowScroll]);
+  }, [getDocumentOffset, useWindowScroll, getScrollData, parsePercentage, stackPosition, itemStackDistance]);
 
   const updateCardTransforms = useCallback(() => {
     if (!cardsRef.current.length || isUpdatingRef.current) return;
@@ -267,7 +285,7 @@ const ScrollStack = ({
 
   return (
     <div className={containerClassName} ref={scrollerRef} style={containerStyles}>
-      <div className="scroll-stack-inner mx-auto max-w-[1216px] pt-[8vh] px-6 pb-[6rem] min-h-screen sm:px-8">
+      <div className="scroll-stack-inner mx-auto max-w-[1216px] pt-8 px-6 min-h-screen sm:px-8">
         {children}
         <div className="scroll-stack-end w-full h-px" />
       </div>

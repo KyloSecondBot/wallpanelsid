@@ -40,7 +40,7 @@ export default function Services() {
 
   return (
     <section id="services" className="px-6">
-      <div className="mx-auto max-w-6xl space-y-8">
+      <div className="mx-auto max-w-6xl space-y-10">
         <div className="flex flex-col gap-3">
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Layanan Kami</p>
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">Semua yang dibutuhkan untuk mewujudkan interior impian.</h2>

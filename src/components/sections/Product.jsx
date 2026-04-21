@@ -165,7 +165,7 @@ export default function Product() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.55 }}
-          className="mb-6"
+          className="mb-10"
         >
           <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">Koleksi Kami</p>
           <div className="mt-2">
