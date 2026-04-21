@@ -83,9 +83,9 @@ const ScrollStack = ({
         const lastIdx = cardsRef.current.length - 1;
         const minPb = Math.max(
           0,
-          containerHeight / 2 - stackPositionPx - itemStackDistance * lastIdx - lastCardHeight
-        ) + 24;
-        inner.style.paddingBottom = `${minPb}px`;
+          stackPositionPx + itemStackDistance * lastIdx + lastCardHeight - containerHeight / 2 + 24
+        );
+        inner.style.paddingBottom = `${Math.ceil(minPb)}px`;
       }
     }
     cardOffsetsRef.current = cardsRef.current.map(card => card ? getDocumentOffset(card) : 0);
