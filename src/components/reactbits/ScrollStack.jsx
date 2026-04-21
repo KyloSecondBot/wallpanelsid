@@ -1,7 +1,6 @@
 'use client';
 
 import { useLayoutEffect, useRef, useCallback } from 'react';
-import Lenis from 'lenis';
 
 export const ScrollStackItem = ({ children, itemClassName = '' }) => (
   <div
@@ -171,63 +170,23 @@ const ScrollStack = ({
   const handleScroll = useCallback(() => { updateCardTransforms(); }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    if (useWindowScroll) {
-      if (isTouchDevice) {
-        // Mobile: skip Lenis entirely — native touch scroll is hardware-accelerated.
-        // Just use a passive scroll listener + rAF for transform updates.
-        const onNativeScroll = () => {
-          if (animationFrameRef.current) return;
-          animationFrameRef.current = requestAnimationFrame(() => {
-            animationFrameRef.current = null;
-            handleScroll();
-          });
-        };
-        window.addEventListener('scroll', onNativeScroll, { passive: true });
-        lenisRef.current = { destroy: () => window.removeEventListener('scroll', onNativeScroll) };
-        return lenisRef.current;
-      }
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true, touchMultiplier: 1, infinite: false,
-        wheelMultiplier: 1, lerp: 0.1, syncTouch: false,
+    // Use a passive scroll listener only — the global Lenis from
+    // SmoothScrollProvider owns smooth scrolling on desktop. Creating a
+    // second Lenis instance here caused two instances to compete via
+    // window.scrollTo(), producing inconsistent scroll positions between
+    // windowed and fullscreen modes.
+    const onScroll = () => {
+      if (animationFrameRef.current) return;
+      animationFrameRef.current = requestAnimationFrame(() => {
+        animationFrameRef.current = null;
+        handleScroll();
       });
-      lenis.on('scroll', handleScroll);
-      const raf = time => { lenis.raf(time); animationFrameRef.current = requestAnimationFrame(raf); };
-      animationFrameRef.current = requestAnimationFrame(raf);
-      lenisRef.current = lenis;
-      return lenis;
-    } else {
-      const scroller = scrollerRef.current;
-      if (!scroller) return;
-      if (isTouchDevice) {
-        const onNativeScroll = () => {
-          if (animationFrameRef.current) return;
-          animationFrameRef.current = requestAnimationFrame(() => {
-            animationFrameRef.current = null;
-            handleScroll();
-          });
-        };
-        scroller.addEventListener('scroll', onNativeScroll, { passive: true });
-        lenisRef.current = { destroy: () => scroller.removeEventListener('scroll', onNativeScroll) };
-        return lenisRef.current;
-      }
-      const lenis = new Lenis({
-        wrapper: scroller,
-        content: scroller.querySelector('.scroll-stack-inner'),
-        duration: 1.2,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true, touchMultiplier: 1, infinite: false,
-        wheelMultiplier: 1, lerp: 0.1, syncTouch: false,
-      });
-      lenis.on('scroll', handleScroll);
-      const raf = time => { lenis.raf(time); animationFrameRef.current = requestAnimationFrame(raf); };
-      animationFrameRef.current = requestAnimationFrame(raf);
-      lenisRef.current = lenis;
-      return lenis;
-    }
+    };
+    const target = useWindowScroll ? window : scrollerRef.current;
+    if (!target) return;
+    target.addEventListener('scroll', onScroll, { passive: true });
+    lenisRef.current = { destroy: () => target.removeEventListener('scroll', onScroll) };
+    return lenisRef.current;
   }, [handleScroll, useWindowScroll]);
 
   useLayoutEffect(() => {
